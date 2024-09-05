@@ -1,0 +1,14 @@
+<div class="cards-container">
+  <div class="card" *ngFor="let branch of branchsList">
+    <h3>{{branch.name}} Branch</h3>
+    <h4>
+      <img src="assets/icon-phone.png" alt="phone icon">
+      {{branch.phone}}
+    </h4>
+    <p>
+      <img src="assets/icon-address.png" alt="phone icon">
+      {{branch.address}}
+    </p>
+    <button class="join-btn">Contact Us</button>
+  </div>
+</div>

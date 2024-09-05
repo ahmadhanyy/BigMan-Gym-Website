@@ -1,0 +1,6 @@
+<div class="star-rating">
+  <span *ngFor="let star of stars; let i = index">
+    {{ showIcon(i) }}
+  </span>
+  <small>({{ratersNo}})</small>
+</div>

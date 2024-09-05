@@ -1,0 +1,56 @@
+<div class="body">
+  <div class="empty-cart" *ngIf="cartItems.length === 0">
+    <img src="assets/icon-empty-cart.png" alt="Empty Cart" class="empty-cart-image">
+    <p class="empty-cart-text">No items yet? Continue shopping to explore more.</p>
+    <a href="/products"><button class="empty-cart-btn">Explore Items</button></a>
+  </div>
+  <div class="filled-cart" *ngIf="cartItems.length != 0">
+    <div class="cart-details">
+      <div class="cart-header">
+        <p>Shopping Cart ({{cartItems.length}})</p>
+      </div>
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems">
+          <div class="prod-card">
+            <a href="/products/{{item.product.id}}" target="_blank"><img alt="img" src="{{ item.product.imageUrl }}" /></a>
+            <div class="prod-details">
+              <a href="/products/{{item.product.id}}" target="_blank"><p class="prod-name">{{ item.product.name }}</p></a>
+              <a href="/products/{{item.product.id}}" target="_blank">
+                <div class="prod-price" *ngIf="item.product.discountPrecent">
+                  <p class="discounted-text">{{item.product.discountPrecent}}% OFF for limited time</p>
+                  <p class="original-price">{{item.product.price | currency: 'EGP'}}</p>
+                  <p class="discounted-price">{{(item.product.price - (item.product.price * item.product.discountPrecent) / 100) | currency: 'EGP'}}</p>
+                </div>
+                <div class="prod-price" *ngIf="!item.product.discountPrecent">
+                  <p class="discounted-price">{{item.product.price | currency: 'EGP'}}</p>
+                </div>
+              </a>
+            </div>
+            <div class="item-buttons">
+              <button><img class="icons" alt="fav icon" src="assets/icon-wishlist-black.png" /></button>
+              <button (click)="removeItem(item)"><img class="icons" alt="fav icon" src="assets/icon-trash.png" /></button>
+            </div>
+            <div class="quantity-buttons">
+              <button (click)="decrementItem(item)">&#x207B;</button>
+              <span>{{item.quantity}}</span>
+              <button (click)="addItem(item.product)">&#8314;</button>
+            </div>
+          </div>
+          <hr/>
+        </div>
+      </div>
+    </div>
+    <div class="cart-payment">
+      <p class="summary">Summary</p>
+      <p class="fees">Subtotal <span>{{getTotalPrice() | currency: 'EGP'}}</span></p>
+      <p class="fees">Shipping <span>{{getTotalPrice() | currency: 'EGP'}}</span></p>
+      <p class="total-fees">Total <span>{{getTotalPrice() | currency: 'EGP'}}</span></p>
+      <div class="checkout-btn">
+        <button>Checkout ({{cartItems.length}})</button>
+      </div>
+    </div>
+  </div>
+  <div class="products-list">
+    <app-products-list [textOnList]="textOnList" [products]="productsList"></app-products-list>
+  </div>
+</div>

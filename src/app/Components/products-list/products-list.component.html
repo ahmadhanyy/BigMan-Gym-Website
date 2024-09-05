@@ -1,0 +1,12 @@
+<h2>{{textOnList}}</h2>
+<div class= 'body'>
+  <div class="list-container">
+    <button class="prod-arrow left-arrow" (click)="scrollLeft()">&#8249;</button>
+    <div class="cards-wrapper" #prodsWrapper>
+      <div *ngFor="let card of products">
+        <app-product-card [card]="card"></app-product-card>
+      </div>
+    </div>
+    <button class="prod-arrow right-arrow" (click)="scrollRight()">&#8250;</button>
+  </div>
+</div>
