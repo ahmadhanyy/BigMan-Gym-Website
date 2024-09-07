@@ -29,10 +29,16 @@ import { CoachesSidebarComponent } from './Components/coaches-sidebar/coaches-si
 import { WishListComponent } from './Components/wish-list/wish-list.component';
 import { StarRatingComponent } from './Components/star-rating/star-rating.component';
 import { LoadButtonComponent } from './Components/load-button/load-button.component';
-import { ProductViewComponent } from './Components/product-view/product-view.component';
-import { CoachViewComponent } from './Components/coach-view/coach-view.component';
 import { ProductsListComponent } from './Components/products-list/products-list.component';
 import { CoachesListComponent } from './Components/coaches-list/coaches-list.component';
+import { ProductModalComponent } from './Components/product-modal/product-modal.component';
+import { CoachModalComponent } from './Components/coach-modal/coach-modal.component';
+import { CategoriesButtonComponent } from './Components/categories-button/categories-button.component';
+import { HorizontalScrollDirective } from './Directives/horizontal-scroll.directive';
+import { ProductGridCardComponent } from './Components/product-grid-card/product-grid-card.component';
+import { ProductListCardComponent } from './Components/product-list-card/product-list-card.component';
+import { CoachGridCardComponent } from './Components/coach-grid-card/coach-grid-card.component';
+import { CoachListCardComponent } from './Components/coach-list-card/coach-list-card.component';
 
 @NgModule({
   declarations: [
@@ -62,10 +68,16 @@ import { CoachesListComponent } from './Components/coaches-list/coaches-list.com
     WishListComponent,
     StarRatingComponent,
     LoadButtonComponent,
-    ProductViewComponent,
-    CoachViewComponent,
     ProductsListComponent,
-    CoachesListComponent
+    CoachesListComponent,
+    ProductModalComponent,
+    CoachModalComponent,
+    CategoriesButtonComponent,
+    HorizontalScrollDirective,
+    ProductGridCardComponent,
+    ProductListCardComponent,
+    CoachGridCardComponent,
+    CoachListCardComponent
   ],
   imports: [
     BrowserModule,

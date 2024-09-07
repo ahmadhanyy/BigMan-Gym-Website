@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
     <a href="/products/{{card.id}}" target="_blank">
-      <img alt="product image" src={{card.imageUrl}}>
+      <img alt="product image" src={{card.imageUrl[0]}}>
       <h5>{{card.name}}</h5>
       <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(card)" [ratersNo]="prodService.calcRatersNumber(card)"></app-star-rating>
       <div class="coach-salary" *ngIf="card.discountPrecent">
@@ -18,10 +18,13 @@
         <img class="fav-wight-icon" alt="icon" src='assets/icon-wishlist.png'>
         <img class="fav-black-icon" alt="icon" src='assets/icon-wishlist-black.png'>
       </button>
-      <button class="btn btn-success cart-btn" (click)="addToCart()">
+      <button class="btn btn-success cart-btn" (click)="openModal()">
         <img class="add-to-cart-wight-icon" alt="icon" src='assets/icon-addToCart-wight.png'>
         <img class="add-to-cart-black-icon" alt="icon" src='assets/icon-addToCart-black.png'>
       </button>
     </div>
   </div>
 </div>
+
+<app-product-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
+</app-product-modal>

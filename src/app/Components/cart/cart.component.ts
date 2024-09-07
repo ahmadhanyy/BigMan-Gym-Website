@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct } from '../../Interfaces/iproduct';
+import { IProduct, shippingAmount } from '../../Interfaces/iproduct';
 import { CartService } from '../../Services/cart.service';
 import { ProductService } from '../../Services/product.service';
 import { ICartItem } from '../../Interfaces/icart-item';
@@ -14,29 +14,41 @@ export class CartComponent implements OnInit {
   productsList: IProduct[] = [];
   textOnList: string = 'More To Love';
 
-  constructor(private cartService: CartService, private prodService: ProductService) {}
+  constructor(private cartService: CartService, public prodService: ProductService) {}
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCartItems();
     this.productsList = this.prodService.getProducts();
   }
 
-  getTotalPrice(): number {
-    let totalPrice: number = 0;
+  getSubTotalPrice(): number {
+    let subTotalPrice: number = 0;
     for (let i = 0; i < this.cartItems.length; i++) {
-      let item = this.cartItems[i];
-      let discountPercent = item.product.discountPrecent ?? 0;
+      let discountPercent = this.cartItems[i].product.discountPrecent ?? 0;
       let itemPrice: number;
-
       if (discountPercent) {
-        itemPrice = item.product.price - ((item.product.price * discountPercent) / 100);
+        itemPrice = this.cartItems[i].product.price - ((this.cartItems[i].product.price * discountPercent) / 100);
       } else {
-        itemPrice = item.product.price;
+        itemPrice = this.cartItems[i].product.price;
       }
-
-      totalPrice += itemPrice * item.quantity;
+      subTotalPrice += itemPrice * this.cartItems[i].quantity;
     }
-    return totalPrice;
+    return subTotalPrice;
+  }
+
+  getShippigPrice(): number {
+    let shippingPrice: number = 0;
+    for (let i = 0; i < this.cartItems.length; i++) {
+      if (this.cartItems[i].product.shippingPrice == shippingAmount.high)
+      {
+        shippingPrice += this.prodService.highShippingPrice;
+      }
+      else if (this.cartItems[i].product.shippingPrice == shippingAmount.low)
+      {
+        shippingPrice += this.prodService.lowShippingPrice;
+      }
+    }
+    return shippingPrice;
   }
 
   clearCart(): void {
@@ -50,7 +62,7 @@ export class CartComponent implements OnInit {
   }
 
   addItem(item: IProduct): void {
-    this.cartService.addToCart(item);
+    this.cartService.addToCart(item, 1);
     this.cartItems = this.cartService.getCartItems();
   }
 

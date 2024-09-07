@@ -33,9 +33,8 @@ button {
 
 .view-icon{
   width: 20px;
-  height: 20px;
+  height: auto;
   padding-bottom: 2px;
-
 }
 
 .grid-btn{
@@ -50,7 +49,7 @@ button {
 
 button.active,
 button.active:hover {
-  background-color: rgb(255, 83, 111);
+  background-color: rgb(240, 156, 0);
 }
 
 .grid-btn:hover,

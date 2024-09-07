@@ -14,6 +14,9 @@
         <p class="discounted-price">{{card.salary | currency: 'EGP'}}</p>
       </div>
     </a>
-    <button class="btn btn-success">Book</button>
+    <button class="btn btn-success" (click)="openModal()">Book</button>
   </div>
 </div>
+
+<app-coach-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
+</app-coach-modal>

@@ -4,8 +4,9 @@ export interface ICoach {
   id: number;
   name: string;
   salary: number;
-  avilableTime: ITimeSlot[];
+  avilableTime?: ITimeSlot[];
   experiance: string;
+  introduction: string;
   imageUrl: string;
   ratings?: number[];
   reviews?: string[];

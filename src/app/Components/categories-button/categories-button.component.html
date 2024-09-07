@@ -1,0 +1,14 @@
+<div class="dropdown">
+  <button class="dropdown-button">
+    <span><img src="assets/icon-listView-wight.png" alt="grid icon" class="wight-icon"></span>
+    <span><img src="assets/icon-listView.png" alt="grid icon" class="black-icon"></span>
+    <span class="button-text">All Categories</span>
+    <span class="down-arrow">&#x25BC;</span>
+    <span class="up-arrow">&#x25BC;</span>
+  </button>
+  <div class="dropdown-content">
+    <ng-container *ngFor="let cat of categories; let i = index">
+      <a href="/products/{{cat.id}}">{{cat.name}}</a>
+    </ng-container>
+  </div>
+</div>

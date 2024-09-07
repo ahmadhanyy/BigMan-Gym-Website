@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoachViewComponent } from './coach-view.component';
+import { ProductModalComponent } from './product-modal.component';
 
-describe('CoachViewComponent', () => {
-  let component: CoachViewComponent;
-  let fixture: ComponentFixture<CoachViewComponent>;
+describe('ProductModalComponent', () => {
+  let component: ProductModalComponent;
+  let fixture: ComponentFixture<ProductModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoachViewComponent]
+      declarations: [ProductModalComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CoachViewComponent);
+    fixture = TestBed.createComponent(ProductModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

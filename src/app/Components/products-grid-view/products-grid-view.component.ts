@@ -10,9 +10,6 @@ import { ProductService } from '../../Services/product.service';
 export class ProductsGridViewComponent {
   prodsList: IProduct[] = [];
   prodRows: IProduct[][] = [];
-  displayedProducts: IProduct[] = [];
-  currentBatchIndex = 0;
-  batchSize = 10;
 
 
   constructor(public prodService: ProductService) {
@@ -21,17 +18,6 @@ export class ProductsGridViewComponent {
   }
 
   ngOnInit(): void {
-    this.loadMoreProducts();
-  }
-
-  loadMoreProducts(): void {
-    const newProducts = this.prodService.getProductsBatch(this.currentBatchIndex, this.batchSize);
-    this.displayedProducts = [...this.displayedProducts, ...newProducts];
-    this.currentBatchIndex += this.batchSize;
-  }
-
-  hasMoreProducts(): boolean {
-    return this.currentBatchIndex < this.prodService.getAllProductsLength();
   }
 
 }

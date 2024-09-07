@@ -11,18 +11,19 @@ export class CoachesListComponent {
   @Input() textOnList: string = '';
   @ViewChild('coachsWrapper') coachsWrapper!: ElementRef<HTMLDivElement>;
 
-  scrollLeft() {
-    this.coachsWrapper.nativeElement.scrollBy({
-      left: -880, // Scroll 4 cards to the left (assuming each card is 220px wide)
-      behavior: 'smooth'
-    });
-  }
-
-  scrollRight() {
-    this.coachsWrapper.nativeElement.scrollBy({
-      left: 880, // Scroll 4 cards to the right (assuming each card is 220px wide)
-      behavior: 'smooth'
-    });
+  scroll(direction: string) {
+    if (direction == 'left') {
+      this.coachsWrapper.nativeElement.scrollBy({
+        left: -880, // Scroll 4 cards to the left (assuming each card is 220px wide)
+        behavior: 'smooth'
+      });
+    }
+    else{
+      this.coachsWrapper.nativeElement.scrollBy({
+        left: 880, // Scroll 4 cards to the left (assuming each card is 220px wide)
+        behavior: 'smooth'
+      });
+    }
   }
 
 }

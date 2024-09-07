@@ -12,18 +12,19 @@ export class ProductsListComponent {
   @ViewChild('prodsWrapper') prodsWrapper!: ElementRef<HTMLDivElement>;
   @Input() textOnList: string = '';
 
-  scrollLeft() {
-    this.prodsWrapper.nativeElement.scrollBy({
-      left: -880, // Scroll 4 cards to the left (assuming each card is 220px wide)
-      behavior: 'smooth'
-    });
-  }
-
-  scrollRight() {
-    this.prodsWrapper.nativeElement.scrollBy({
-      left: 880, // Scroll 4 cards to the right (assuming each card is 220px wide)
-      behavior: 'smooth'
-    });
+  scroll(direction: string) {
+    if (direction == 'left') {
+      this.prodsWrapper.nativeElement.scrollBy({
+        left: -880, // Scroll 4 cards to the left (assuming each card is 220px wide)
+        behavior: 'smooth'
+      });
+    }
+    else{
+      this.prodsWrapper.nativeElement.scrollBy({
+        left: 880, // Scroll 4 cards to the left (assuming each card is 220px wide)
+        behavior: 'smooth'
+      });
+    }
   }
 
 }

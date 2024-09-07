@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Renderer2 } from '@angular/core';
 import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
-import { CartService } from '../../Services/cart.service';
 
 @Component({
   selector: 'app-product-card',
@@ -10,12 +9,19 @@ import { CartService } from '../../Services/cart.service';
 })
 export class ProductCardComponent {
   @Input() card!: IProduct;
+  isModalOpen = false;
 
-  constructor(public prodService: ProductService, private cartService: CartService) {
+  constructor(public prodService: ProductService, private renderer: Renderer2) {
   }
 
-  addToCart() {
-    this.cartService.addToCart(this.card);
+  openModal() {
+    this.isModalOpen = true;
+    this.renderer.addClass(document.body, 'modal-open'); // Add the modal-open class to <body>
+  }
+
+  closeModal() {
+    this.isModalOpen = false;
+    this.renderer.removeClass(document.body, 'modal-open'); // Remove the modal-open class to <body>
   }
 
 }

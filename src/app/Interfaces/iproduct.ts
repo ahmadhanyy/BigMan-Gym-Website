@@ -5,8 +5,19 @@ export interface IProduct {
   price: number;
   quantity: number;
   description: string;
-  imageUrl: string;
+  imageUrl: string[];
+  returnable: boolean;
+  freeShipping: boolean;
+  shippingPrice: shippingAmount;
+  color?: string[];
+  size?: string[];
   ratings?: number[];
   reviews?: string[];
   discountPrecent?: number;
 }
+
+export enum shippingAmount {
+  low,
+  high
+}
+

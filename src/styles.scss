@@ -4,3 +4,8 @@
 *{
   font-family: 'Open Sans', sans-serif;
 }
+
+body.modal-open {
+  overflow: hidden; /* Prevent background scrolling when modal is open */
+}
+

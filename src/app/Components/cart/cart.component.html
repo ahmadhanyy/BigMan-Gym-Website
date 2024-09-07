@@ -12,7 +12,7 @@
       <div class="cart-items">
         <div class="cart-item" *ngFor="let item of cartItems">
           <div class="prod-card">
-            <a href="/products/{{item.product.id}}" target="_blank"><img alt="img" src="{{ item.product.imageUrl }}" /></a>
+            <a href="/products/{{item.product.id}}" target="_blank"><img alt="img" src="{{ item.product.imageUrl[0]}}" /></a>
             <div class="prod-details">
               <a href="/products/{{item.product.id}}" target="_blank"><p class="prod-name">{{ item.product.name }}</p></a>
               <a href="/products/{{item.product.id}}" target="_blank">
@@ -42,9 +42,9 @@
     </div>
     <div class="cart-payment">
       <p class="summary">Summary</p>
-      <p class="fees">Subtotal <span>{{getTotalPrice() | currency: 'EGP'}}</span></p>
-      <p class="fees">Shipping <span>{{getTotalPrice() | currency: 'EGP'}}</span></p>
-      <p class="total-fees">Total <span>{{getTotalPrice() | currency: 'EGP'}}</span></p>
+      <p class="fees">Subtotal <span>{{getSubTotalPrice() | currency: 'EGP'}}</span></p>
+      <p class="fees">Shipping <span>{{getShippigPrice() | currency: 'EGP'}}</span></p>
+      <p class="total-fees">Total <span>{{(getSubTotalPrice() + getShippigPrice()) | currency: 'EGP'}}</span></p>
       <div class="checkout-btn">
         <button>Checkout ({{cartItems.length}})</button>
       </div>

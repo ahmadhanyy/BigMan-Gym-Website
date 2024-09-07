@@ -9,12 +9,12 @@ export class CartService {
 
   private cart: ICartItem[] = [];
 
-  addToCart(product: IProduct) {
+  addToCart(product: IProduct, orderQuantity: number) {
     let cartItem = this.cart.find(item => item.product.id === product.id);
     if (cartItem) {
-      cartItem.quantity++;
+      cartItem.quantity += orderQuantity;
     } else {
-      this.cart.push({ product, quantity: 1 });
+      this.cart.push({ product, quantity: orderQuantity });
     }
   }
 

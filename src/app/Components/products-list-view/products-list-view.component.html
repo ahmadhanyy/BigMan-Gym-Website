@@ -4,7 +4,7 @@
       <td>
         <div class="prod-card">
           <a href="/products/{{prod.id}}" target="_blank">
-            <img alt="img" src="{{ prod.imageUrl }}" />
+            <img alt="img" src="{{ prod.imageUrl[0]}}" />
           <div class="prod-info">
             <p class="prod-name">{{ prod.name }}</p>
             <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(prod)" [ratersNo]="prodService.calcRatersNumber(prod)"></app-star-rating>
@@ -22,7 +22,7 @@
                 <p class="discounted-price">{{prod.price | currency: 'EGP'}}</p>
               </div>
             </a>
-            <button (click)="addToCart(prod)">Add To Cart</button>
+            <button (click)="openModal(prod)">Add To Cart</button>
           </div>
         </div>
         <hr>
@@ -31,3 +31,6 @@
   </tbody>
   <app-load-button></app-load-button>
 </table>
+
+<app-product-modal [isOpen]="isModalOpen" [card]="selectedProduct" (close)="closeModal()">
+</app-product-modal>
