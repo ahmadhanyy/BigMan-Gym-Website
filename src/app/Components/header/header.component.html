@@ -1,19 +1,21 @@
 <nav>
   <div class="container-fluid">
-    <a href="/home"><img src="assets/Logo.png" alt="logo" class="logo" /></a>
+    <a routerLink="/home"><img src="assets/Logo.png" alt="logo" class="logo" /></a>
     <div class="header-items">
       <form action="/search" method="GET">
         <input type="text" placeholder="What are you looking for?">
       </form>
       <ul>
         <li class="nav-item">
-          <a href="/login"><img src="assets/icon-login.png" alt="login icon" class="login-icon" /></a>
+          <a routerLink="/login"><img src="assets/icon-login.png" alt="login icon" class="login-icon" /></a>
         </li>
         <li class="nav-item">
-          <a href="/wishlist"><img src="assets/icon-wishlist.png" alt="wishlist icon" class="wishlist-icon" /></a>
+          <a routerLink="/wishlist">
+            <img src="assets/icon-wishlist.png" alt="wishlist icon" class="wishlist-icon" />
+          </a>
         </li>
         <li class="nav-item">
-          <a href="/cart">
+          <a routerLink="/cart">
             <img src="assets/icon-cart.png" alt="cart icon" class="cart-icon" />
             <span class="cart-count">{{cartCount}}</span>
           </a>

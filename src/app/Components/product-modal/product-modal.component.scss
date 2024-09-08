@@ -13,7 +13,7 @@
   position: absolute;
   top: 10px;
   right: 45px;
-  z-index: 11;
+  z-index: 13;
 }
 
 .close-btn {
@@ -36,6 +36,7 @@
   width: 1250px;
   padding: 30px;
   position: absolute;
+  z-index: 12;
   top: 30px;
   bottom: 30px;
   display: flex;
@@ -101,9 +102,17 @@
 .details-section{
   padding: 0px 20px;
   width: 550px;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+.details-section::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for WebKit browsers */
 }
 
 .prod-name {
@@ -151,13 +160,9 @@
   align-items: center;
 }
 
-.payment-section{
-  width: 300px;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  border: 1px solid #929292;
-  border-radius: 10px;
+.prod-color,
+.prod-size{
+  margin-bottom: 20px;
 }
 
 .color-label,
@@ -169,33 +174,51 @@
 
 .color-btn,
 .size-btn {
-  padding: 7px;
+  padding: 7px 15px;
   border: 1px solid #ccc;
   transition: padding 0s, border-width 0s, border-color 0s;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-right: 5px;
   border-radius: 10px;
   background-color: #ffffff;
   text-transform: uppercase;
   font-size: 0.8rem;
   font-weight: 600;
+  flex-wrap: wrap;
 }
 
 .color-btn:hover,
 .size-btn:hover {
   border-width: 3px;
-  padding: 5px;
+  padding: 5px 13px;
   border-color: #000;
 }
 
 .color-btn.active,
 .size-btn.active {
   border-width: 3px;
-  padding: 6px;
+  padding: 5px 13px;
   border-color: #000;
 }
 
+.show-more-btns {
+  color: rgb(0, 0, 0);
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: grid;
+  width: 100px;
+}
+
+.payment-section{
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #929292;
+  border-radius: 10px;
+}
 
 .payment-labels {
   font-size: 1.3rem;

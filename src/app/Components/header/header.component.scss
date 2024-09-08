@@ -3,6 +3,11 @@
   margin: 0;
 }
 
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
 .container-fluid {
   background-color: rgb(30, 30, 30);
   display: flex;
@@ -36,16 +41,19 @@ ul {
 .wishlist-icon,
 .cart-icon{
   width: 30px;
+  height: auto;
 }
 
 .cart-count {
-  text-decoration: none;
   background-color: rgb(255, 255, 255);
   border-radius: 20px;
-  padding: 0px 8px;
+  padding: 0px 5px;
   color: rgb(0, 0, 0);
   font-size: 0.8rem;
   font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 form input:focus {

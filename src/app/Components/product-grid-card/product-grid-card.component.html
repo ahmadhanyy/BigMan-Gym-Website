@@ -1,1 +1,34 @@
-<p>product-grid-card works!</p>
+<div class="card">
+  <div class="card-body">
+    <a href="/products/{{card.id}}" target="_blank">
+      <img alt="product image" src={{card.imageUrl[0]}}>
+      <h5>{{card.name}}</h5>
+      <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(card)" [ratersNo]="prodService.calcRatersNumber(card)"></app-star-rating>
+      <div class="coach-salary" *ngIf="card.discountPrecent">
+        <p class="discounted-text">{{card.discountPrecent}}% OFF</p>
+        <p class="original-price">{{card.price | currency: 'EGP'}}</p>
+        <p class="discounted-price">{{(card.price - (card.price * card.discountPrecent) / 100) | currency: 'EGP'}}</p>
+      </div>
+      <div class="coach-salary" *ngIf="!card.discountPrecent">
+        <p class="discounted-price">{{card.price | currency: 'EGP'}}</p>
+      </div>
+    </a>
+    <div class="button-group">
+      <button class="btn btn-success" *ngIf="!card.isFav" (click)="addToWishlist(card)">
+        <img class="icon fav-wight-icon" alt="icon" src='assets/icon-wishlist.png'>
+        <img class="icon fav-black-icon" alt="icon" src='assets/icon-wishlist-black.png'>
+      </button>
+      <button class="btn btn-success" *ngIf="card.isFav" (click)="removeFromWishlist(card)">
+        <img class="icon fav-wight-filled-icon" alt="icon" src='assets/icon-wishlist-filled.png'>
+        <img class="icon fav-black-filled-icon" alt="icon" src='assets/icon-wishlist-filled-black.png'>
+      </button>
+      <button class="btn btn-success" (click)="openModal()">
+        <img class="icon add-to-cart-wight-icon" alt="icon" src='assets/icon-addToCart-wight.png'>
+        <img class="icon add-to-cart-black-icon" alt="icon" src='assets/icon-addToCart-black.png'>
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-product-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
+</app-product-modal>

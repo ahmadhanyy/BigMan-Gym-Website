@@ -13,6 +13,9 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.cartCount = this.cartService.getCartCount();
+    // Subscribe to the cartCount$ observable to get real-time updates
+    this.cartService.cartCount$.subscribe(count => {
+      this.cartCount = count;
+    });
   }
 }

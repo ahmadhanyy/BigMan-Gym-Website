@@ -4,7 +4,7 @@
     <button class="prod-arrow left-arrow" (click)="scroll('left')">&#8249;</button>
     <div class="cards-wrapper" #prodsWrapper>
       <div *ngFor="let card of products">
-        <app-product-card [card]="card"></app-product-card>
+        <app-product-grid-card [card]="card"></app-product-grid-card>
       </div>
     </div>
     <button class="prod-arrow right-arrow" (click)="scroll('right')">&#8250;</button>

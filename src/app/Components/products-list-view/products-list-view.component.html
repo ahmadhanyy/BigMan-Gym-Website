@@ -2,35 +2,10 @@
   <tbody>
     <tr *ngFor="let prod of prodsList">
       <td>
-        <div class="prod-card">
-          <a href="/products/{{prod.id}}" target="_blank">
-            <img alt="img" src="{{ prod.imageUrl[0]}}" />
-          <div class="prod-info">
-            <p class="prod-name">{{ prod.name }}</p>
-            <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(prod)" [ratersNo]="prodService.calcRatersNumber(prod)"></app-star-rating>
-            <p class="prod-description">{{ prod.description }}</p>
-          </div>
-          </a>
-          <div class="prod-payment">
-            <a href="/products/{{prod.id}}" target="_blank">
-              <div class="prod-price" *ngIf="prod.discountPrecent">
-                <p class="original-price">{{prod.price | currency: 'EGP'}}</p>
-                <p class="discounted-price">{{(prod.price - (prod.price * prod.discountPrecent) / 100) | currency: 'EGP'}}</p>
-                <p class="discounted-text">{{prod.discountPrecent}}% OFF for limited time</p>
-              </div>
-              <div class="prod-price" *ngIf="!prod.discountPrecent">
-                <p class="discounted-price">{{prod.price | currency: 'EGP'}}</p>
-              </div>
-            </a>
-            <button (click)="openModal(prod)">Add To Cart</button>
-          </div>
-        </div>
+        <app-product-list-card [card]="prod"></app-product-list-card>
         <hr>
       </td>
     </tr>
   </tbody>
   <app-load-button></app-load-button>
 </table>
-
-<app-product-modal [isOpen]="isModalOpen" [card]="selectedProduct" (close)="closeModal()">
-</app-product-modal>

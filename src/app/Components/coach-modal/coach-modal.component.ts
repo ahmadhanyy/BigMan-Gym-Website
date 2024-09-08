@@ -12,7 +12,8 @@ export class CoachModalComponent implements OnInit {
   @Input() card!: ICoach;
   @Input() isOpen: boolean = false;
   @Output() close = new EventEmitter<void>();
-  chosenTime: ITimeSlot = {"day": '', "hour": ''};
+  chosenTime: ITimeSlot = { "day": '', "hour": '' };
+  showAllSessions = false;
 
   constructor(public coachService: CoachService) {
   }
@@ -26,6 +27,7 @@ export class CoachModalComponent implements OnInit {
 
   closeModal() {
     this.close.emit();
+    this.showAllSessions = false;
     if (this.card.avilableTime && this.card.avilableTime.length > 0) {
       this.chosenTime = this.card.avilableTime[0];
     }
@@ -35,7 +37,22 @@ export class CoachModalComponent implements OnInit {
     this.chosenTime = time;
   }
 
-  contact(coach: ICoach){
+  contact(coach: ICoach) {
+  }
+
+  // Computed properties to determine visible items
+  get visibleSessions() {
+    if (this.card.avilableTime) {
+      return this.showAllSessions ? this.card.avilableTime : this.card.avilableTime.slice(0, 10); // Show 10 Sessions
+    }
+    else {
+      return [];
+    }
+  }
+
+  // Methods to show more Sessions
+  showMoreSessions() {
+    this.showAllSessions = true;
   }
 
 }

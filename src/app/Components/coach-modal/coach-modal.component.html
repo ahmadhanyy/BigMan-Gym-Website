@@ -39,9 +39,10 @@
       <div class="coach-sessions" *ngIf="card.avilableTime">
         <p class="session-label">Session: {{chosenTime.day.toUpperCase()}} - {{chosenTime.hour}}</p>
         <p class="session-duration">Note: Sessions duration is 2 hours only.</p>
-        <ng-container *ngFor="let time of card.avilableTime">
+        <ng-container *ngFor="let time of visibleSessions">
           <button class="session-btn" (click)="chooseTime(time)" [class.active]="chosenTime === time">{{time.day.toUpperCase()}} - {{time.hour}}</button>
         </ng-container>
+        <span class="show-more-btns" *ngIf="card.avilableTime.length > 10 && !showAllSessions" (click)="showMoreSessions()">View more &#x25BC;</span>
       </div>
     </div>
   </div>

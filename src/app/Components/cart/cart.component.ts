@@ -3,6 +3,7 @@ import { IProduct, shippingAmount } from '../../Interfaces/iproduct';
 import { CartService } from '../../Services/cart.service';
 import { ProductService } from '../../Services/product.service';
 import { ICartItem } from '../../Interfaces/icart-item';
+import { WishlistService } from '../../Services/wishlist.service';
 
 @Component({
   selector: 'app-cart',
@@ -14,7 +15,9 @@ export class CartComponent implements OnInit {
   productsList: IProduct[] = [];
   textOnList: string = 'More To Love';
 
-  constructor(private cartService: CartService, public prodService: ProductService) {}
+  constructor(private cartService: CartService,
+              public prodService: ProductService,
+              private wishlistService: WishlistService) {}
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCartItems();
@@ -69,5 +72,13 @@ export class CartComponent implements OnInit {
   decrementItem(item: ICartItem): void {
     this.cartService.removeOneFromCart(item.product);
     this.cartItems = this.cartService.getCartItems();
+  }
+
+  addToWishlist(item: IProduct): void {
+    this.wishlistService.addToWishlist(item);
+  }
+
+  removeFromWishlist(item: IProduct): void {
+    this.wishlistService.removeFromWishlist(item);
   }
 }

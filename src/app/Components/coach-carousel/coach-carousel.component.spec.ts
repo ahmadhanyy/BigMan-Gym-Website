@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CoachCardComponent } from './coach-card.component';
+import { CoachCarouselComponent } from './coach-carousel.component';
 
-describe('CoachCardComponent', () => {
-  let component: CoachCardComponent;
-  let fixture: ComponentFixture<CoachCardComponent>;
+describe('CoachCarouselComponent', () => {
+  let component: CoachCarouselComponent;
+  let fixture: ComponentFixture<CoachCarouselComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CoachCardComponent]
+      declarations: [CoachCarouselComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CoachCardComponent);
+    fixture = TestBed.createComponent(CoachCarouselComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

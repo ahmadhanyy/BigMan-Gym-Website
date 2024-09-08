@@ -14,6 +14,7 @@ export interface IProduct {
   ratings?: number[];
   reviews?: string[];
   discountPrecent?: number;
+  isFav: boolean;
 }
 
 export enum shippingAmount {

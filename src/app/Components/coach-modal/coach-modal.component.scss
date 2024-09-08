@@ -59,11 +59,19 @@
 }
 
 .details-section{
-  padding-left: 20px;
+  padding: 0px 20px;
   width: 850px;
+  max-height: 500px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-y: scroll;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* Internet Explorer and Edge */
+}
+
+.details-section::-webkit-scrollbar {
+  display: none; /* Hide the scrollbar for WebKit browsers */
 }
 
 .coach-name {
@@ -146,13 +154,14 @@
   border: 1px solid #ccc;
   transition: padding 0s, border-width 0s, border-color 0s;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-right: 5px;
   border-radius: 10px;
   background-color: #ffffff;
   text-transform: uppercase;
   font-size: 0.8rem;
   font-weight: 600;
+  flex-wrap: wrap;
 }
 
 .session-btn:hover {
@@ -165,6 +174,15 @@
   border-width: 3px;
   padding: 6px;
   border-color: #000;
+}
+
+.show-more-btns {
+  color: rgb(0, 0, 0);
+  font-size: 0.9rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: grid;
+  width: 100px;
 }
 
 .payment-section{

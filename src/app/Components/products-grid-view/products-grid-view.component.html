@@ -2,7 +2,7 @@
   <div class="row" *ngFor="let row of prodRows">
     <div class="cards-container">
       <ng-container  *ngFor="let card of row">
-        <app-product-card [card]="card"></app-product-card>
+        <app-product-grid-card [card]="card"></app-product-grid-card>
       </ng-container>
     </div>
   </div>

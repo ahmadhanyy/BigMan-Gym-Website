@@ -2,11 +2,11 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ICoach } from '../../Interfaces/icoach';
 
 @Component({
-  selector: 'app-coaches-list',
-  templateUrl: './coaches-list.component.html',
-  styleUrl: './coaches-list.component.scss'
+  selector: 'app-coach-carousel',
+  templateUrl: './coach-carousel.component.html',
+  styleUrl: './coach-carousel.component.scss'
 })
-export class CoachesListComponent {
+export class CoachCarouselComponent {
   @Input() coachs: ICoach[] = [];
   @Input() textOnList: string = '';
   @ViewChild('coachsWrapper') coachsWrapper!: ElementRef<HTMLDivElement>;

@@ -1,4 +1,4 @@
-import { Component, Renderer2 } from '@angular/core';
+import { Component } from '@angular/core';
 import { ICoach } from '../../Interfaces/icoach';
 import { CoachService } from '../../Services/coach.service';
 
@@ -9,23 +9,9 @@ import { CoachService } from '../../Services/coach.service';
 })
 export class CoachesListViewComponent {
   coachesList: ICoach[] = [];
-  isModalOpen = false;
-  selectedCoach!: ICoach;
 
-  constructor(public coachService: CoachService, private renderer: Renderer2) {
-    this.coachesList = this.coachService.getCoaches();
-    this.selectedCoach = this.coachesList[0];
-  }
-
-  openModal(coach: ICoach) {
-    this.selectedCoach = coach;
-    this.isModalOpen = true;
-    this.renderer.addClass(document.body, 'modal-open'); // Add the modal-open class to <body>
-  }
-
-  closeModal() {
-    this.isModalOpen = false;
-    this.renderer.removeClass(document.body, 'modal-open'); // Remove the modal-open class to <body>
+  constructor(public coachService: CoachService) {
+    this.coachesList = coachService.getCoaches();
   }
 
 }

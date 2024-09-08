@@ -1,20 +1,24 @@
 import { Injectable } from '@angular/core';
 import { ICartItem } from '../Interfaces/icart-item';
 import { IProduct } from '../Interfaces/iproduct';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-
+  private cartCountSubject = new BehaviorSubject<number>(0);  // Initial cart count is 0
+  cartCount$ = this.cartCountSubject.asObservable();  // Observable for components to subscribe to
   private cart: ICartItem[] = [];
 
   addToCart(product: IProduct, orderQuantity: number) {
     let cartItem = this.cart.find(item => item.product.id === product.id);
     if (cartItem) {
       cartItem.quantity += orderQuantity;
-    } else {
+    }
+    else {
       this.cart.push({ product, quantity: orderQuantity });
+      this.cartCountSubject.next(this.cartCountSubject.value + 1);  // Update the cart count
     }
   }
 
@@ -22,6 +26,7 @@ export class CartService {
     const cartItemIndex = this.cart.findIndex(item => item.product.id === product.id);
     if (cartItemIndex > -1) {
       this.cart.splice(cartItemIndex, 1);
+      this.cartCountSubject.next(this.cartCountSubject.value - 1);  // Update the cart count
     }
   }
 
@@ -29,7 +34,8 @@ export class CartService {
     let cartItem = this.cart.find(item => item.product.id === product.id);
     if (cartItem && cartItem.quantity > 1) {
       cartItem.quantity--;
-    } else {
+    }
+    else {
       this.removeFromCart(product);
     }
   }
@@ -39,10 +45,11 @@ export class CartService {
   }
 
   getCartCount(): number {
-    return this.cart.reduce((total, item) => total + item.quantity, 0);
+    return this.cartCountSubject.value;  // Get the current value
   }
 
   clearCart() {
     this.cart = [];
+    this.cartCountSubject.next(0);  // Update the cart count
   }
 }

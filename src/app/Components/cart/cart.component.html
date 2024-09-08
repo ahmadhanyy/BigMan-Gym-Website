@@ -2,7 +2,7 @@
   <div class="empty-cart" *ngIf="cartItems.length === 0">
     <img src="assets/icon-empty-cart.png" alt="Empty Cart" class="empty-cart-image">
     <p class="empty-cart-text">No items yet? Continue shopping to explore more.</p>
-    <a href="/products"><button class="empty-cart-btn">Explore Items</button></a>
+    <a routerLink="/products"><button class="empty-cart-btn">Explore Items</button></a>
   </div>
   <div class="filled-cart" *ngIf="cartItems.length != 0">
     <div class="cart-details">
@@ -27,7 +27,8 @@
               </a>
             </div>
             <div class="item-buttons">
-              <button><img class="icons" alt="fav icon" src="assets/icon-wishlist-black.png" /></button>
+              <button *ngIf="!item.product.isFav" (click)="addToWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist-black.png" /></button>
+              <button *ngIf="item.product.isFav" (click)="removeFromWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist-filled-black.png" /></button>
               <button (click)="removeItem(item)"><img class="icons" alt="fav icon" src="assets/icon-trash.png" /></button>
             </div>
             <div class="quantity-buttons">
@@ -51,6 +52,6 @@
     </div>
   </div>
   <div class="products-list">
-    <app-products-list [textOnList]="textOnList" [products]="productsList"></app-products-list>
+    <app-product-carousel [textOnList]="textOnList" [products]="productsList"></app-product-carousel>
   </div>
 </div>

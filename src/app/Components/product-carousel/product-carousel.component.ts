@@ -2,12 +2,11 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { IProduct } from '../../Interfaces/iproduct';
 
 @Component({
-  selector: 'app-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrl: './products-list.component.scss'
+  selector: 'app-product-carousel',
+  templateUrl: './product-carousel.component.html',
+  styleUrl: './product-carousel.component.scss'
 })
-
-export class ProductsListComponent {
+export class ProductCarouselComponent {
   @Input() products: IProduct[] = [];
   @ViewChild('prodsWrapper') prodsWrapper!: ElementRef<HTMLDivElement>;
   @Input() textOnList: string = '';

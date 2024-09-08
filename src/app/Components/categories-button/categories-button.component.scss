@@ -4,13 +4,14 @@
   border: none;
   cursor: pointer;
   border-radius: 20px;
-  padding: 7px 15px;
   text-transform: uppercase;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 400;
   min-width: 250px;
+  height: 40px;
   display: flex;
   align-items: center;
+  padding: 0px 20px;
 }
 
 .button-text {
@@ -18,27 +19,33 @@
   text-align: left;
 }
 
-.down-arrow,
-.up-arrow {
-  font-size: 1rem;
-  margin-left: 10px;
-  transition: all 0.3s ease;
+.arrow {
+  margin-right: 10px;
+  font-size: 1.9rem;
+  transform: rotate(90deg);
 }
 
-.down-arrow {
-  display: inline-block;
+.down-arrow{
+  display: block;
 }
 
-.up-arrow {
+.up-arrow{
   display: none;
-  transform: rotate(180deg);
+}
+
+.dropdown:hover .down-arrow{
+  display: none;
+}
+
+.dropdown:hover .up-arrow{
+  display: block;
 }
 
 .wight-icon,
 .black-icon {
   width: 20px;
   height: auto;
-  margin-right: 10px;
+  margin: 0px 5px;
 }
 
 .wight-icon {
@@ -85,14 +92,6 @@
 
 .dropdown:hover .dropdown-content {
   display: block;
-}
-
-.dropdown:hover .down-arrow {
-  display: none; /* Hide the down arrow on hover */
-}
-
-.dropdown:hover .up-arrow {
-  display: inline-block; /* Show the up arrow on hover */
 }
 
 .dropdown:hover .wight-icon {

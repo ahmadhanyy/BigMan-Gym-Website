@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, ElementRef, ViewChild, OnInit }
 import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
 import { CartService } from '../../Services/cart.service';
+import { WishlistService } from '../../Services/wishlist.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -20,8 +21,12 @@ export class ProductModalComponent implements OnInit {
   chosenColor: string = '';
   chosenSize: string = '';
   chosenImg: string = '';
+  showAllColors = false;
+  showAllSizes = false;
 
-  constructor(public prodService: ProductService, private cartService: CartService) {
+  constructor(public prodService: ProductService,
+              private cartService: CartService,
+              private wishlistService: WishlistService) {
     this.deliveryStartDate = new Date(this.today);
     this.deliveryStartDate.setDate(this.today.getDate() + 3); // 3 days after today
 
@@ -40,9 +45,12 @@ export class ProductModalComponent implements OnInit {
     }
   }
 
+
   closeModal() {
     this.close.emit();
     this.quantityNo = 1;
+    this.showAllColors = false;
+    this.showAllSizes = false;
     this.chosenImg = this.card.imageUrl[0];
     if (this.card.color && this.card.color.length > 0) {
       this.chosenColor = this.card.color[0];
@@ -56,13 +64,13 @@ export class ProductModalComponent implements OnInit {
     if (this.card.imageUrl && this.card.imageUrl.length > 5) {
       if (direction == 'left') {
         this.imgsWrapper.nativeElement.scrollBy({
-          left: -((this.card.imageUrl.length*60) - 300),
+          left: -((this.card.imageUrl.length * 60) - 300),
           behavior: 'smooth'
         });
       }
       else {
         this.imgsWrapper.nativeElement.scrollBy({
-          left: ((this.card.imageUrl.length*60) - 300),
+          left: ((this.card.imageUrl.length * 60) - 300),
           behavior: 'smooth'
         });
       }
@@ -96,6 +104,42 @@ export class ProductModalComponent implements OnInit {
   addToCart(card: IProduct) {
     this.cartService.addToCart(card, this.quantityNo);
     this.closeModal();
+  }
+
+  addToWishlist(card: IProduct) {
+    this.wishlistService.addToWishlist(card);
+  }
+
+  removeFromWishlist(card: IProduct) {
+    this.wishlistService.removeFromWishlist(card);
+  }
+
+  // Computed properties to determine visible items
+  get visibleColors() {
+    if (this.card.color) {
+      return this.showAllColors ? this.card.color : this.card.color.slice(0, 10); // Show 10 colors
+    }
+    else {
+      return [];
+    }
+  }
+
+  get visibleSizes() {
+    if (this.card.size) {
+      return this.showAllSizes ? this.card.size : this.card.size.slice(0, 10); // Show 10 colors
+    }
+    else {
+      return [];
+    }
+  }
+
+  // Methods to show more colors and sizes
+  showMoreColors() {
+    this.showAllColors = true;
+  }
+
+  showMoreSizes() {
+    this.showAllSizes = true;
   }
 
 }

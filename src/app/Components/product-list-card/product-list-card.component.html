@@ -1,1 +1,36 @@
-<p>product-list-card works!</p>
+<div class="card">
+  <div class="prod-card">
+    <a href="/products/{{card.id}}" target="_blank">
+      <img alt="img" src="{{ card.imageUrl[0]}}" />
+    <div class="prod-info">
+      <p class="prod-name">{{ card.name }}</p>
+      <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(card)" [ratersNo]="prodService.calcRatersNumber(card)"></app-star-rating>
+      <p class="prod-description">{{ card.description }}</p>
+    </div>
+    </a>
+    <div class="prod-payment">
+      <a href="/products/{{card.id}}" target="_blank">
+        <div class="prod-price" *ngIf="card.discountPrecent">
+          <p class="original-price">{{card.price | currency: 'EGP'}}</p>
+          <p class="discounted-price">{{(card.price - (card.price * card.discountPrecent) / 100) | currency: 'EGP'}}</p>
+          <p class="discounted-text">{{card.discountPrecent}}% OFF for limited time</p>
+        </div>
+        <div class="prod-price" *ngIf="!card.discountPrecent">
+          <p class="discounted-price">{{card.price | currency: 'EGP'}}</p>
+        </div>
+      </a>
+      <button class="cart-btn" (click)="openModal()">Add To Cart</button>
+      <button class="fav-btn" *ngIf="!card.isFav" (click)="addToWishlist(card)">
+        <img class="fav-wight-icon" alt="icon" src='assets/icon-wishlist.png'>
+        <img class="fav-black-icon" alt="icon" src='assets/icon-wishlist-black.png'>
+      </button>
+      <button class="fav-btn" *ngIf="card.isFav" (click)="removeFromWishlist(card)">
+        <img class="fav-wight-icon" alt="icon" src='assets/icon-wishlist-filled.png'>
+        <img class="fav-black-icon" alt="icon" src='assets/icon-wishlist-filled-black.png'>
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-product-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
+</app-product-modal>

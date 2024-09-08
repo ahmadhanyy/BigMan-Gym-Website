@@ -17,8 +17,6 @@ import { LogInComponent } from './Components/log-in/log-in.component';
 import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
-import { ProductCardComponent } from './Components/product-card/product-card.component';
-import { CoachCardComponent } from './Components/coach-card/coach-card.component';
 import { CoachesComponent } from './Components/coaches/coaches.component';
 import { ProductsListViewComponent } from './Components/products-list-view/products-list-view.component';
 import { ProductsGridViewComponent } from './Components/products-grid-view/products-grid-view.component';
@@ -29,8 +27,6 @@ import { CoachesSidebarComponent } from './Components/coaches-sidebar/coaches-si
 import { WishListComponent } from './Components/wish-list/wish-list.component';
 import { StarRatingComponent } from './Components/star-rating/star-rating.component';
 import { LoadButtonComponent } from './Components/load-button/load-button.component';
-import { ProductsListComponent } from './Components/products-list/products-list.component';
-import { CoachesListComponent } from './Components/coaches-list/coaches-list.component';
 import { ProductModalComponent } from './Components/product-modal/product-modal.component';
 import { CoachModalComponent } from './Components/coach-modal/coach-modal.component';
 import { CategoriesButtonComponent } from './Components/categories-button/categories-button.component';
@@ -39,6 +35,8 @@ import { ProductGridCardComponent } from './Components/product-grid-card/product
 import { ProductListCardComponent } from './Components/product-list-card/product-list-card.component';
 import { CoachGridCardComponent } from './Components/coach-grid-card/coach-grid-card.component';
 import { CoachListCardComponent } from './Components/coach-list-card/coach-list-card.component';
+import { ProductCarouselComponent } from './Components/product-carousel/product-carousel.component';
+import { CoachCarouselComponent } from './Components/coach-carousel/coach-carousel.component';
 
 @NgModule({
   declarations: [
@@ -56,8 +54,6 @@ import { CoachListCardComponent } from './Components/coach-list-card/coach-list-
     SignUpComponent,
     ProfileComponent,
     NavbarComponent,
-    ProductCardComponent,
-    CoachCardComponent,
     CoachesComponent,
     ProductsListViewComponent,
     ProductsGridViewComponent,
@@ -68,8 +64,6 @@ import { CoachListCardComponent } from './Components/coach-list-card/coach-list-
     WishListComponent,
     StarRatingComponent,
     LoadButtonComponent,
-    ProductsListComponent,
-    CoachesListComponent,
     ProductModalComponent,
     CoachModalComponent,
     CategoriesButtonComponent,
@@ -77,7 +71,9 @@ import { CoachListCardComponent } from './Components/coach-list-card/coach-list-
     ProductGridCardComponent,
     ProductListCardComponent,
     CoachGridCardComponent,
-    CoachListCardComponent
+    CoachListCardComponent,
+    ProductCarouselComponent,
+    CoachCarouselComponent
   ],
   imports: [
     BrowserModule,

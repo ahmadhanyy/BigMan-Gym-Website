@@ -2,35 +2,10 @@
   <tbody>
     <tr *ngFor="let coach of coachesList">
       <td>
-        <div class="coach-card">
-          <a href="/coaches/{{coach.id}}" target="_blank">
-            <img alt="img" src="{{ coach.imageUrl }}"/>
-          <div class="coach-info">
-            <p class="coach-name">{{ coach.name }}</p>
-            <app-star-rating class="rate-stars" [rating]="coachService.calcAverageRating(coach)" [ratersNo]="coachService.calcRatersNumber(coach)"></app-star-rating>
-            <p class="coach-experience">Experience: {{ coach.experiance }}</p>
-          </div>
-          </a>
-          <div class="coach-payment">
-            <a href="/coaches/{{coach.id}}" target="_blank">
-              <div class="coach-salary" *ngIf="coach.discountPrecent">
-                <p class="original-price">{{coach.salary | currency: 'EGP'}}</p>
-                <p class="discounted-price">{{(coach.salary - (coach.salary * coach.discountPrecent) / 100) | currency: 'EGP'}}</p>
-                <p class="discounted-text">{{coach.discountPrecent}}% OFF for limited time</p>
-              </div>
-              <div class="coach-salary" *ngIf="!coach.discountPrecent">
-                <p class="discounted-price">{{coach.salary | currency: 'EGP'}}</p>
-              </div>
-            </a>
-            <button (click)="openModal(coach)">Book</button>
-          </div>
-        </div>
+        <app-coach-list-card [card]="coach"></app-coach-list-card>
         <hr>
       </td>
     </tr>
   </tbody>
   <app-load-button></app-load-button>
 </table>
-
-<app-coach-modal [isOpen]="isModalOpen" [card]="selectedCoach" (close)="closeModal()">
-</app-coach-modal>
