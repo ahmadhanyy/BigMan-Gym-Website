@@ -44,11 +44,15 @@ export class CartComponent implements OnInit {
     for (let i = 0; i < this.cartItems.length; i++) {
       if (this.cartItems[i].product.shippingPrice == shippingAmount.high)
       {
-        shippingPrice += this.prodService.highShippingPrice;
+        for (let j = 0; j < this.cartItems[i].quantity; j++) {
+          shippingPrice += this.prodService.highShippingPrice;
+        }
       }
       else if (this.cartItems[i].product.shippingPrice == shippingAmount.low)
       {
-        shippingPrice += this.prodService.lowShippingPrice;
+        for (let j = 0; j < this.cartItems[i].quantity; j++) {
+          shippingPrice += this.prodService.lowShippingPrice;
+        }
       }
     }
     return shippingPrice;

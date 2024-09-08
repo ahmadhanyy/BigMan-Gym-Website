@@ -305,18 +305,16 @@
   border: 1px solid #727272;
 }
 
-.fav-btn{
-  border: none;
-  border-radius: 20px;
-  padding: 7px 20px;
+.fav-icon{
+  width: 40px;
+  height: 40px;
   margin: 0px;
-  margin-top: 15px;
+  margin-top: 10px;
   margin-left: 10px;
-  border: 1px solid #727272;
+  cursor: pointer;
 }
 
-.protection-icon,
-.fav-icon {
+.protection-icon {
   width: 20px;
   height: auto;
 }

@@ -27,8 +27,8 @@
               </a>
             </div>
             <div class="item-buttons">
-              <button *ngIf="!item.product.isFav" (click)="addToWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist-black.png" /></button>
-              <button *ngIf="item.product.isFav" (click)="removeFromWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist-filled-black.png" /></button>
+              <button *ngIf="!item.product.isFav" (click)="addToWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist.png" /></button>
+              <button *ngIf="item.product.isFav" (click)="removeFromWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist-filled.png" /></button>
               <button (click)="removeItem(item)"><img class="icons" alt="fav icon" src="assets/icon-trash.png" /></button>
             </div>
             <div class="quantity-buttons">

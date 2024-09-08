@@ -14,17 +14,10 @@
       </div>
     </a>
     <div class="button-group">
-      <button class="btn btn-success" *ngIf="!card.isFav" (click)="addToWishlist(card)">
-        <img class="icon fav-wight-icon" alt="icon" src='assets/icon-wishlist.png'>
-        <img class="icon fav-black-icon" alt="icon" src='assets/icon-wishlist-black.png'>
-      </button>
-      <button class="btn btn-success" *ngIf="card.isFav" (click)="removeFromWishlist(card)">
-        <img class="icon fav-wight-filled-icon" alt="icon" src='assets/icon-wishlist-filled.png'>
-        <img class="icon fav-black-filled-icon" alt="icon" src='assets/icon-wishlist-filled-black.png'>
-      </button>
+      <img class="icon fav-icon" *ngIf="!card.isFav" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
+      <img class="icon fav-icon" *ngIf="card.isFav" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
       <button class="btn btn-success" (click)="openModal()">
-        <img class="icon add-to-cart-wight-icon" alt="icon" src='assets/icon-addToCart-wight.png'>
-        <img class="icon add-to-cart-black-icon" alt="icon" src='assets/icon-addToCart-black.png'>
+        <img class="icon cart-icon" alt="icon" src='assets/icon-toCart.png'>
       </button>
     </div>
   </div>

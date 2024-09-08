@@ -20,14 +20,8 @@
         </div>
       </a>
       <button class="cart-btn" (click)="openModal()">Add To Cart</button>
-      <button class="fav-btn" *ngIf="!card.isFav" (click)="addToWishlist(card)">
-        <img class="fav-wight-icon" alt="icon" src='assets/icon-wishlist.png'>
-        <img class="fav-black-icon" alt="icon" src='assets/icon-wishlist-black.png'>
-      </button>
-      <button class="fav-btn" *ngIf="card.isFav" (click)="removeFromWishlist(card)">
-        <img class="fav-wight-icon" alt="icon" src='assets/icon-wishlist-filled.png'>
-        <img class="fav-black-icon" alt="icon" src='assets/icon-wishlist-filled-black.png'>
-      </button>
+      <img class="fav-icon" *ngIf="!card.isFav" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
+      <img class="fav-icon" *ngIf="card.isFav" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
     </div>
   </div>
 </div>

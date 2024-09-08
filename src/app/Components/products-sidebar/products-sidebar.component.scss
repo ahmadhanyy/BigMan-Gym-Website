@@ -47,25 +47,25 @@ button {
   width: 50%;
 }
 
-button.active {
-  background-color: rgb(255, 187, 0);
-}
-
+button.active,
 button.active:hover {
-  background-color: rgb(255, 187, 0);
+  background-color: rgb(240, 156, 0);
 }
 
 .filter-btn{
   font-weight: 700;
   border-radius: 20px;
   width: 100%;
-  background-color: rgb(255, 187, 0);;
+  background-color: rgb(240, 156, 0);
 }
 
-.filter-btn:hover,
 .grid-btn:hover,
 .list-btn:hover {
-  background-color: rgb(240, 156, 0);
+  background-color: rgb(230, 230, 230);
+}
+
+.filter-btn:hover{
+  background-color: rgb(221, 144, 0);
 }
 
 .price-range label {

@@ -6,17 +6,20 @@
         <input type="text" placeholder="What are you looking for?">
       </form>
       <ul>
-        <li class="nav-item">
-          <a routerLink="/login"><img src="assets/icon-login.png" alt="login icon" class="login-icon" /></a>
-        </li>
-        <li class="nav-item">
-          <a routerLink="/wishlist">
-            <img src="assets/icon-wishlist.png" alt="wishlist icon" class="wishlist-icon" />
+        <li class="login-section">
+          <a routerLink="/login">
+            <img class="login-icon" src="assets/icon-login.png" alt="login icon"/>
+            <span class="login-text">{{loginText}}</span>
           </a>
         </li>
-        <li class="nav-item">
+        <li class="wishlist-section">
+          <a routerLink="/wishlist">
+            <img class="wishlist-icon" src="assets/icon-wishlist.png" alt="wishlist icon"/>
+          </a>
+        </li>
+        <li class="cart-section">
           <a routerLink="/cart">
-            <img src="assets/icon-cart.png" alt="cart icon" class="cart-icon" />
+            <img class="cart-icon" src="assets/icon-cart.png" alt="cart icon"/>
             <span class="cart-count">{{cartCount}}</span>
           </a>
         </li>

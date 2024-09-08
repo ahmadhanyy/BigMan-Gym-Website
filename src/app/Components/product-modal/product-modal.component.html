@@ -98,8 +98,8 @@
       </div>
       <div class="details-fav-btns">
         <a href="/products/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
-        <button class="fav-btn" *ngIf="!card.isFav" (click)="addToWishlist(card)"><img class="fav-icon" alt="icon" src='assets/icon-wishlist-black.png'></button>
-        <button class="fav-btn" *ngIf="card.isFav" (click)="removeFromWishlist(card)"><img class="fav-icon" alt="icon" src='assets/icon-wishlist-filled-black.png'></button>
+        <img class="fav-icon" *ngIf="!card.isFav" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
+        <img class="fav-icon" *ngIf="card.isFav" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
       </div>
     </div>
   </div>

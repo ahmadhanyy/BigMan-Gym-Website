@@ -117,30 +117,16 @@ img {
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+.fav-icon{
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
 .card-body button:hover {
   background-color: rgb(206, 206, 206);
 }
 
-.add-to-cart-wight-icon,
-.fav-wight-filled-icon,
-.fav-wight-icon {
-  display: block;
-}
-
-.add-to-cart-black-icon,
-.fav-black-filled-icon,
-.fav-black-icon {
-  display: none;
-}
-
-.cart-btn:hover .add-to-cart-wight-icon,
-.fav-btn:hover .fav-wight-filled-icon,
-.fav-btn:hover .fav-wight-icon {
-  display: none;
-}
-
-.cart-btn:hover .add-to-cart-black-icon,
-.fav-btn:hover .fav-black-filled-icon,
-.fav-btn:hover .fav-black-icon {
-  display: block;
+.card-body button:hover .cart-icon {
+  filter: invert(100%);
 }

@@ -8,6 +8,7 @@ import { CartService } from '../../Services/cart.service';
 })
 export class HeaderComponent implements OnInit {
   cartCount: number = 0;
+  loginText: string = 'login';
 
   constructor(private cartService: CartService) {
   }

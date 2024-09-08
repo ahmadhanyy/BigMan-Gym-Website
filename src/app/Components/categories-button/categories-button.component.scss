@@ -14,9 +14,27 @@
   padding: 0px 20px;
 }
 
+.dropdown:hover .dropdown-button {
+  background-color: rgb(230, 230, 230);
+  border-radius: 20px 20px 0px 0px;
+  color: rgb(0, 0, 0);
+}
+
 .button-text {
   flex: 1;
   text-align: left;
+}
+
+.category-icon {
+  width: 20px;
+  height: auto;
+  margin: 0px 5px;
+  filter: invert(100%)
+}
+
+
+.dropdown:hover .category-icon {
+  filter: invert(0%)
 }
 
 .arrow {
@@ -41,21 +59,6 @@
   display: block;
 }
 
-.wight-icon,
-.black-icon {
-  width: 20px;
-  height: auto;
-  margin: 0px 5px;
-}
-
-.wight-icon {
-  display: block; /* Show by default */
-}
-
-.black-icon {
-  display: none; /* Hide by default */
-}
-
 .dropdown-content {
   display: none;
   position: absolute;
@@ -64,6 +67,10 @@
   z-index: 1;
   top: 100%;
   min-width: 250px;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
 }
 
 .dropdown-content a {
@@ -82,22 +89,4 @@
   background-color: rgb(250, 250, 250);
   border-radius: 20px;
   font-weight: 600;
-}
-
-.dropdown:hover .dropdown-button {
-  background-color: rgb(230, 230, 230);
-  border-radius: 20px 20px 0px 0px;
-  color: rgb(0, 0, 0);
-}
-
-.dropdown:hover .dropdown-content {
-  display: block;
-}
-
-.dropdown:hover .wight-icon {
-  display: none; /* Hide the white icon on hover */
-}
-
-.dropdown:hover .black-icon {
-  display: block; /* Show the black icon on hover */
 }

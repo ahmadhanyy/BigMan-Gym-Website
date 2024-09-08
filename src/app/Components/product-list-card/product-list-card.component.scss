@@ -83,8 +83,9 @@ button {
   border-radius: 20px;
   font-size: 0.9rem;
   font-weight: 700;
+  padding: 10px 40px;
   position: absolute;
-  cursor: pointer;
+  bottom: 10px;
 }
 
 button:hover {
@@ -92,35 +93,11 @@ button:hover {
   color: black;
 }
 
-.cart-btn{
-  padding: 10px 40px;
-  bottom: 10px;
-}
-
-.fav-btn{
-  padding: 6px 15px;
-  bottom: 10px;
+.fav-icon{
+  width: 40px;
+  height: 40px;
+  bottom: 11px;
   right: 280px;
-}
-
-.fav-wight-icon,
-.fav-black-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.fav-wight-icon {
-  display: block;
-}
-
-.fav-black-icon {
-  display: none;
-}
-
-button:hover .fav-wight-icon {
-  display: none;
-}
-
-button:hover .fav-black-icon {
-  display: block;
+  position: absolute;
+  cursor: pointer;
 }
