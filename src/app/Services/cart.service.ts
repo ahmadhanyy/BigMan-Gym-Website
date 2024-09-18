@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ICartItem } from '../Interfaces/icart-item';
 import { IProduct } from '../Interfaces/iproduct';
 import { BehaviorSubject } from 'rxjs';
+import { ProductService } from './product.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,33 +11,33 @@ export class CartService {
   private cartCountSubject = new BehaviorSubject<number>(0);  // Initial cart count is 0
   cartCount$ = this.cartCountSubject.asObservable();  // Observable for components to subscribe to
   private cart: ICartItem[] = [];
+  cartItemId: number = 0;
 
-  addToCart(product: IProduct, orderQuantity: number) {
-    let cartItem = this.cart.find(item => item.product.id === product.id);
-    if (cartItem) {
-      cartItem.quantity += orderQuantity;
+  constructor(private prodService: ProductService) {}
+
+  addToCart(cartItem: ICartItem){
+    let isItem = this.cart.find(item => item.id === cartItem.id)
+    if (isItem) {
+      isItem.count++;
     }
     else {
-      this.cart.push({ product, quantity: orderQuantity });
+      this.cart.push(cartItem);
       this.cartCountSubject.next(this.cartCountSubject.value + 1);  // Update the cart count
     }
   }
 
-  removeFromCart(product: IProduct) {
-    const cartItemIndex = this.cart.findIndex(item => item.product.id === product.id);
-    if (cartItemIndex > -1) {
-      this.cart.splice(cartItemIndex, 1);
+  removeFromCart(cartItem: ICartItem) {
+    const itemIndex = this.cart.findIndex(item => item.id === cartItem.id);
+    if (itemIndex > -1) {
+      this.cart.splice(itemIndex, 1);
       this.cartCountSubject.next(this.cartCountSubject.value - 1);  // Update the cart count
     }
   }
 
-  removeOneFromCart(product: IProduct) {
-    let cartItem = this.cart.find(item => item.product.id === product.id);
-    if (cartItem && cartItem.quantity > 1) {
-      cartItem.quantity--;
-    }
-    else {
-      this.removeFromCart(product);
+  decrementItem(cartItem: ICartItem) {
+    let item = this.cart.find(item => item.id === cartItem.id);
+    if (item && item.count > 1) {
+      cartItem.count--;
     }
   }
 

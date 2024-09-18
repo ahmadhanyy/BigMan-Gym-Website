@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ICategory } from '../../Interfaces/icategory';
 import { CategoryService } from '../../Services/category.service';
 
@@ -11,6 +11,9 @@ export class CategoriesButtonComponent {
   categories: ICategory[] = [];
 
   constructor(private catService: CategoryService) {
+    //this.catService.getCategories().subscribe((data) => {
+    //  this.categories = data;
+    //});
     this.categories = this.catService.getCategories();
   }
 

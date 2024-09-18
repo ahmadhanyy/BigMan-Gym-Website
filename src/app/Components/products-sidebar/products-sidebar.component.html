@@ -15,7 +15,7 @@
   </div>
   <div class="filter-section">
     <h6>Sort By</h6>
-    <select>
+    <select [(ngModel)]="sortOption" (change)="changeSort()">
       <option value="price-asc">Price: Low to High</option>
       <option value="price-desc">Price: High to Low</option>
       <option value="rating">Rating</option>
@@ -27,18 +27,18 @@
     <h6>Filter</h6>
     <div class="price-range">
       <label for="min-price">Min Price:</label>
-      <input type="number" id="min-price" name="min-price" placeholder="0" min="0" max="1000000"/>
+      <input type="number" [(ngModel)]="minPrice" id="min-price" placeholder="0" min="0" />
       <label for="max-price">Max Price:</label>
-      <input type="number" id="max-price" name="max-price" placeholder="1000000" min="0" max="1000000"/>
+      <input type="number" [(ngModel)]="maxPrice" id="max-price" placeholder="1000000" min="0" />
     </div>
     <div>
-      <input type="checkbox" id="free-shipping" name="free-shipping" />
+      <input type="checkbox" [(ngModel)]="freeShipping" id="free-shipping" />
       <label for="free-shipping">Free Shipping</label>
     </div>
     <div>
-      <input type="checkbox" id="discount" name="discount" />
+      <input type="checkbox" [(ngModel)]="discount" id="discount" />
       <label for="discount">Discount</label>
     </div>
-    <button class="filter-btn">Filter</button>
+    <button class="filter-btn" (click)="applyFilters()">Filter</button>
   </div>
 </div>

@@ -8,33 +8,38 @@
     <div class="cart-details">
       <div class="cart-header">
         <p>Shopping Cart ({{cartItems.length}})</p>
+        <button class="clear-btn" (click)="clearCart()">Clear</button>
       </div>
       <div class="cart-items">
         <div class="cart-item" *ngFor="let item of cartItems">
           <div class="prod-card">
-            <a href="/products/{{item.product.id}}" target="_blank"><img alt="img" src="{{ item.product.imageUrl[0]}}" /></a>
+            <a href="/product/{{item.prodId}}" target="_blank"><img alt="img" src="{{ item.prodImageUrl[0]}}" /></a>
             <div class="prod-details">
-              <a href="/products/{{item.product.id}}" target="_blank"><p class="prod-name">{{ item.product.name }}</p></a>
-              <a href="/products/{{item.product.id}}" target="_blank">
-                <div class="prod-price" *ngIf="item.product.discountPrecent">
-                  <p class="discounted-text">{{item.product.discountPrecent}}% OFF for limited time</p>
-                  <p class="original-price">{{item.product.price | currency: 'EGP'}}</p>
-                  <p class="discounted-price">{{(item.product.price - (item.product.price * item.product.discountPrecent) / 100) | currency: 'EGP'}}</p>
+              <a href="/product/{{item.prodId}}" target="_blank"><p class="prod-name">{{ item.prodName }}</p></a>
+              <a href="/product/{{item.prodId}}" target="_blank">
+                <div class="prod-price" *ngIf="item.discountPrecent">
+                  <p class="discounted-text">{{item.discountPrecent}}% OFF for limited time</p>
+                  <p class="original-price">{{item.price | currency: 'EGP'}}</p>
+                  <p class="discounted-price">{{(item.price - (item.price * item.discountPrecent) / 100) | currency: 'EGP'}}</p>
                 </div>
-                <div class="prod-price" *ngIf="!item.product.discountPrecent">
-                  <p class="discounted-price">{{item.product.price | currency: 'EGP'}}</p>
+                <div class="prod-price" *ngIf="!item.discountPrecent">
+                  <p class="discounted-price">{{item.price | currency: 'EGP'}}</p>
                 </div>
               </a>
+              <div class="prod-color">
+                <p class="color-text">Color: {{item.color}}</p>
+              </div>
+              <div class="prod-size">
+                <p class="size-text">Size: {{item.size}}</p>
+              </div>
             </div>
             <div class="item-buttons">
-              <button *ngIf="!item.product.isFav" (click)="addToWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist.png" /></button>
-              <button *ngIf="item.product.isFav" (click)="removeFromWishlist(item.product)"><img class="icons" alt="fav icon" src="assets/icon-wishlist-filled.png" /></button>
               <button (click)="removeItem(item)"><img class="icons" alt="fav icon" src="assets/icon-trash.png" /></button>
             </div>
             <div class="quantity-buttons">
               <button (click)="decrementItem(item)">&#x207B;</button>
-              <span>{{item.quantity}}</span>
-              <button (click)="addItem(item.product)">&#8314;</button>
+              <span>{{item.count}}</span>
+              <button (click)="incrementItem(item)">&#8314;</button>
             </div>
           </div>
           <hr/>

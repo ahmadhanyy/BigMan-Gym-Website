@@ -7,8 +7,18 @@ import { Component } from '@angular/core';
 })
 export class ProductsComponent {
   viewMode: 'grid' | 'list' = 'grid'; // Grid view is the default
+  currentSort: string = 'price-asc';
+  currentFilters: any = {};
 
   setViewMode(mode: 'grid' | 'list') {
     this.viewMode = mode;
+  }
+
+  onSortChange(sortOption: string): void {
+    this.currentSort = sortOption;
+  }
+
+  onFilterChange(filters: any): void {
+    this.currentFilters = filters;
   }
 }

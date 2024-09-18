@@ -1,12 +1,34 @@
 import { Injectable } from '@angular/core';
 import { IUser } from '../Interfaces/iuser';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  private apiUrl = 'http://localhost:3000'
+  users: IUser[] = []
 
-  constructor() { }
+  constructor(private httpClient: HttpClient) {
+    this.users = [
 
-  users: IUser[] = [{'id': 1, 'name': 'John Doe', 'email': 'aa@aa.com', 'password': '1234', 'phone': '1234567890', 'address': {'buildingNo': '15', 'street': 'El Shabab Road', 'city': 'El Sherouq City'}}];
+    ]
+  }
+
+  getUser(): Observable<IUser> {
+    return this.httpClient.get<IUser>(`${this.apiUrl}/users`);
+  }
+
+  addUser(user: IUser) {
+    return this.httpClient.post(`${this.apiUrl}/users`, user);
+  }
+
+  deleteUser(id: number) {
+    return this.httpClient.delete(`${this.apiUrl}/users/${id}`);
+  }
+
+  updateUser(user: IUser) {
+    return this.httpClient.put(`${this.apiUrl}/users/${user.id}`, user);
+  }
 }

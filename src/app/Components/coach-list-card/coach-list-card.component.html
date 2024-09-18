@@ -1,15 +1,15 @@
 <div class="card">
   <div class="coach-card">
-    <a href="/coaches/{{card.id}}" target="_blank">
+    <a href="/coach/{{card.id}}">
       <img alt="img" src="{{ card.imageUrl }}"/>
     <div class="coach-info">
       <p class="coach-name">{{ card.name }}</p>
-      <app-star-rating class="rate-stars" [rating]="coachService.calcAverageRating(card)" [ratersNo]="coachService.calcRatersNumber(card)"></app-star-rating>
+      <app-star-rating class="rate-stars" [coachCard]="card"></app-star-rating>
       <p class="coach-experience">Experience: {{ card.experiance }}</p>
     </div>
     </a>
     <div class="coach-payment">
-      <a href="/coaches/{{card.id}}" target="_blank">
+      <a href="/coach/{{card.id}}">
         <div class="coach-salary" *ngIf="card.discountPrecent">
           <p class="original-price">{{card.salary | currency: 'EGP'}}</p>
           <p class="discounted-price">{{(card.salary - (card.salary * card.discountPrecent) / 100) | currency: 'EGP'}}</p>
@@ -24,5 +24,5 @@
   </div>
 </div>
 
-<app-coach-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
-</app-coach-modal>
+<app-coach-modal [isOpen]="isModalCoachOpen" [card]="card" (close)="closeCoachModal()"></app-coach-modal>
+<app-login-modal [isOpen]="isModalLoginOpen" (close)="closeLoginModal()"></app-login-modal>

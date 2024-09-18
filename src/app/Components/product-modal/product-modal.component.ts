@@ -3,6 +3,8 @@ import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
 import { CartService } from '../../Services/cart.service';
 import { WishlistService } from '../../Services/wishlist.service';
+import { ICartItem } from '../../Interfaces/icart-item';
+import { ReviewService } from '../../Services/review.service';
 
 @Component({
   selector: 'app-product-modal',
@@ -14,7 +16,7 @@ export class ProductModalComponent implements OnInit {
   @Input() isOpen: boolean = false;
   @Output() close = new EventEmitter<void>();
   @ViewChild('imgsWrapper') imgsWrapper!: ElementRef<HTMLDivElement>;
-  quantityNo: number = 1;
+  countNo: number = 1;
   today: Date = new Date();
   deliveryStartDate: Date;
   deliveryEndDate: Date;
@@ -25,6 +27,7 @@ export class ProductModalComponent implements OnInit {
   showAllSizes = false;
 
   constructor(public prodService: ProductService,
+              public reviewService: ReviewService,
               private cartService: CartService,
               private wishlistService: WishlistService) {
     this.deliveryStartDate = new Date(this.today);
@@ -48,7 +51,7 @@ export class ProductModalComponent implements OnInit {
 
   closeModal() {
     this.close.emit();
-    this.quantityNo = 1;
+    this.countNo = 1;
     this.showAllColors = false;
     this.showAllSizes = false;
     this.chosenImg = this.card.imageUrl[0];
@@ -90,20 +93,34 @@ export class ProductModalComponent implements OnInit {
   }
 
   decrementQuantity() {
-    if (this.quantityNo > 1) {
-      this.quantityNo--;
+    if (this.countNo > 1) {
+      this.countNo--;
     }
   }
 
   incrementQuantity() {
-    if (this.card.quantity > this.quantityNo) {
-      this.quantityNo++;
+    if (this.card.quantity > this.countNo) {
+      this.countNo++;
     }
   }
 
-  addToCart(card: IProduct) {
-    this.cartService.addToCart(card, this.quantityNo);
+  addToCart(prod: IProduct) {
+    let cartItem: ICartItem = { 'id': this.cartService.cartItemId,
+                                'prodId': prod.id,
+                                'prodQuantity': prod.quantity,
+                                'prodName': prod.name,
+                                'prodCategory': prod.categoryId,
+                                'count': this.countNo,
+                                'color': this.chosenColor,
+                                'size': this.chosenSize,
+                                'price': prod.price,
+                                'prodImageUrl': prod.imageUrl,
+                                'freeShipping': prod.freeShipping,
+                                'shippingPrice': prod.shippingPrice,
+                                'discountPrecent': prod.discountPrecent}
+    this.cartService.addToCart(cartItem);
     this.closeModal();
+    this.cartService.cartItemId++;
   }
 
   addToWishlist(card: IProduct) {
@@ -140,6 +157,12 @@ export class ProductModalComponent implements OnInit {
 
   showMoreSizes() {
     this.showAllSizes = true;
+  }
+
+  onBackdropClick(event: MouseEvent) {
+    if ((event.target as HTMLElement).classList.contains('modal')) {
+      this.closeModal(); // Close modal if the user clicks on the backdrop
+    }
   }
 
 }

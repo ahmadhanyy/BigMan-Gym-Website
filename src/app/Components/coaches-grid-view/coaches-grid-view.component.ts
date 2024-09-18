@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ICoach } from '../../Interfaces/icoach';
 import { CoachService } from '../../Services/coach.service';
 
@@ -7,13 +7,17 @@ import { CoachService } from '../../Services/coach.service';
   templateUrl: './coaches-grid-view.component.html',
   styleUrl: './coaches-grid-view.component.scss'
 })
-export class CoachesGridViewComponent {
-  coaches: ICoach[] = [];
+export class CoachesGridViewComponent implements OnInit {
+  //coaches: ICoach[] = [];
   coachRows: ICoach[][] = [];
 
   constructor(public coachService: CoachService) {
-    this.coaches = coachService.getCoaches();
-    this.coachRows = coachService.convertListTo2DList(this.coaches, 4);
+  }
+  ngOnInit(): void {
+    this.coachRows = this.coachService.convertListTo2DList(this.coachService.getCoaches(), 4);
+    //this.coachService.getCoaches().subscribe(coaches => {
+    //  this.coachRows = this.coachService.convertListTo2DList(coaches, 4);
+    //});
   }
 
 }

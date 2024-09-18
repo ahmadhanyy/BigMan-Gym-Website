@@ -14,5 +14,8 @@ export class BranchesComponent implements OnInit {
 
   ngOnInit(): void {
     this.branchsList = this.branchService.getBranches();
+    //this.branchService.getBranches().subscribe((data) => {
+    //  this.branchsList = data;
+    //});
   }
 }

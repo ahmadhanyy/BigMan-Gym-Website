@@ -2,14 +2,13 @@
   display: flex;
   align-items: center;
   gap: 1px;
-}
 
-span {
-  color: black;
-  font-size: 17px;
-}
+  .star {
+    cursor: pointer;
+  }
 
-small{
-  font-size: 10px;
-  color: #000000;
+  small {
+    font-size: 10px;
+    color: #000000;
+  }
 }

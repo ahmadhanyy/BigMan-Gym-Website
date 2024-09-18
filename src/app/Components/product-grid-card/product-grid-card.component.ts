@@ -2,6 +2,9 @@ import { Component, Input, Renderer2 } from '@angular/core';
 import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
 import { WishlistService } from '../../Services/wishlist.service';
+import { AuthService } from '../../Services/auth.service';
+import { ModalService } from '../../Services/modal.service';
+import { ReviewService } from '../../Services/review.service';
 
 @Component({
   selector: 'app-product-grid-card',
@@ -10,20 +13,34 @@ import { WishlistService } from '../../Services/wishlist.service';
 })
 export class ProductGridCardComponent {
   @Input() card!: IProduct;
-  isModalOpen = false;
+  isModalProdOpen = false;
+  isModalLoginOpen = false;
 
-  constructor(public prodService: ProductService,
-              private renderer: Renderer2,
-              private wishlistService: WishlistService) {
-  }
+  constructor(
+    public reviewService: ReviewService,
+    private renderer: Renderer2,
+    private authService: AuthService,
+    private modalService: ModalService,
+    private wishlistService: WishlistService) {}
 
   openModal() {
-    this.isModalOpen = true;
-    this.renderer.addClass(document.body, 'modal-open'); // Add the modal-open class to <body>
+    if(this.authService.isLoggedIn) {
+      this.isModalProdOpen = true;
+      this.renderer.addClass(document.body, 'modal-open');
+    }
+    else {
+      this.modalService.openLoginModal();
+      this.renderer.addClass(document.body, 'modal-open');
+    }
   }
 
-  closeModal() {
-    this.isModalOpen = false;
+  closeProdModal() {
+    this.isModalProdOpen = false;
+    this.renderer.removeClass(document.body, 'modal-open');
+  }
+
+  closeLoginModal() {
+    this.modalService.closeLoginModal();
     this.renderer.removeClass(document.body, 'modal-open'); // Remove the modal-open class to <body>
   }
 

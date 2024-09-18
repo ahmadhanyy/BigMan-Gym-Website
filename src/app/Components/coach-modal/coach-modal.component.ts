@@ -55,4 +55,10 @@ export class CoachModalComponent implements OnInit {
     this.showAllSessions = true;
   }
 
+  onBackdropClick(event: MouseEvent) {
+    if ((event.target as HTMLElement).classList.contains('modal')) {
+      this.closeModal(); // Close modal if the user clicks on the backdrop
+    }
+  }
+
 }

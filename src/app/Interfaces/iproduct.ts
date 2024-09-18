@@ -1,7 +1,7 @@
 export interface IProduct {
-  id: number;
+  id?: number;
   name: string;
-  category: number;
+  categoryId: number;
   price: number;
   quantity: number;
   description: string;
@@ -9,12 +9,15 @@ export interface IProduct {
   returnable: boolean;
   freeShipping: boolean;
   shippingPrice: shippingAmount;
+  discountPrecent?: number;
+  priceAfterDiscount?: number;
+  isFav: boolean;
   color?: string[];
   size?: string[];
-  ratings?: number[];
-  reviews?: string[];
-  discountPrecent?: number;
-  isFav: boolean;
+  material?: string;
+  productionCountry: string;
+  Fit?: string;
+  brand: string;
 }
 
 export enum shippingAmount {

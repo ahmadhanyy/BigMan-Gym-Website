@@ -18,6 +18,12 @@ export class HomeComponent implements OnInit {
   constructor(private coachService: CoachService, private prodService: ProductService) {}
 
   ngOnInit(): void {
+    //this.coachService.getCoaches().subscribe((data) => {
+    //  this.coachesList = data;
+    //});
+    //this.prodService.getProducts().subscribe((data) => {
+    //  this.productsList = data;
+    //});
     this.coachesList = this.coachService.getCoaches();
     this.productsList = this.prodService.getProducts();
   }

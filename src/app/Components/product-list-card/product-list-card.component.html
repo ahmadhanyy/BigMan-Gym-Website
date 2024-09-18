@@ -1,15 +1,15 @@
 <div class="card">
   <div class="prod-card">
-    <a href="/products/{{card.id}}" target="_blank">
+    <a href="/product/{{card.id}}">
       <img alt="img" src="{{ card.imageUrl[0]}}" />
     <div class="prod-info">
       <p class="prod-name">{{ card.name }}</p>
-      <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(card)" [ratersNo]="prodService.calcRatersNumber(card)"></app-star-rating>
+      <app-star-rating class="rate-stars" [prodCard]="card"></app-star-rating>
       <p class="prod-description">{{ card.description }}</p>
     </div>
     </a>
     <div class="prod-payment">
-      <a href="/products/{{card.id}}" target="_blank">
+      <a href="/product/{{card.id}}">
         <div class="prod-price" *ngIf="card.discountPrecent">
           <p class="original-price">{{card.price | currency: 'EGP'}}</p>
           <p class="discounted-price">{{(card.price - (card.price * card.discountPrecent) / 100) | currency: 'EGP'}}</p>
@@ -26,5 +26,5 @@
   </div>
 </div>
 
-<app-product-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
-</app-product-modal>
+<app-product-modal [isOpen]="isModalProdOpen" [card]="card" (close)="closeProdModal()"></app-product-modal>
+<app-login-modal [isOpen]="isModalLoginOpen" (close)="closeLoginModal()"></app-login-modal>

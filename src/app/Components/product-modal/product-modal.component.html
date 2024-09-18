@@ -1,4 +1,4 @@
-<div class="modal" *ngIf="isOpen">
+<div class="modal" *ngIf="isOpen" (click)="onBackdropClick($event)">
   <div class="close-modal">
     <span class="close-btn" (click)="closeModal()">&times;</span>
   </div>
@@ -20,7 +20,7 @@
     <div class="details-section">
       <div class="prod-info">
         <p class="prod-name">{{ card.name }}</p>
-        <app-star-rating class="rate-stars" [rating]="prodService.calcAverageRating(card)" [ratersNo]="prodService.calcRatersNumber(card)"></app-star-rating>
+        <app-star-rating class="rate-stars" [prodCard]="card"></app-star-rating>
       </div>
       <div class="prod-payment">
           <div class="prod-price" *ngIf="card.discountPrecent">
@@ -49,7 +49,7 @@
             <ng-container *ngFor="let size of visibleSizes">
               <button class="size-btn" (click)="chooseSize(size)" [class.active]="chosenSize === size">{{size}}</button>
             </ng-container>
-            <span class="show-more-btns" *ngIf="card.size.length > 10 && !showAllSizes" (click)="showMoreSizes()">View more &#x25BC;</span>
+            <span class="show-more-btns" *ngIf="card.size" (click)="showMoreSizes()">View more &#x25BC;</span>
           </div>
         </div>
       </div>
@@ -90,14 +90,14 @@
       </div>
       <div class="quantity-buttons">
         <button (click)="decrementQuantity()">&#x207B;</button>
-        <span>{{quantityNo}}</span>
+        <span>{{countNo}}</span>
         <button (click)="incrementQuantity()">&#8314;</button>
       </div>
       <div class="cart-btn">
         <button class="add-to-cart-btn" (click)="addToCart(card)">Add To Cart</button>
       </div>
       <div class="details-fav-btns">
-        <a href="/products/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
+        <a href="/product/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
         <img class="fav-icon" *ngIf="!card.isFav" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
         <img class="fav-icon" *ngIf="card.isFav" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
       </div>

@@ -1,22 +1,22 @@
 <div class="card">
   <div class="card-body">
-    <a href="/coaches/{{card.id}}" target="_blank">
-      <img alt="product image" src="{{ card.imageUrl }}" />
+    <a href="/coach/{{card.id}}">
+      <img [src]="card.imageUrl" alt="product image">
       <h5>{{ card.name }}</h5>
-      <app-star-rating class="rate-stars" [rating]="coachService.calcAverageRating(card)" [ratersNo]="coachService.calcRatersNumber(card)"></app-star-rating>
+      <app-star-rating class="rate-stars" [coachCard]="card"></app-star-rating>
       <h6>Experience: {{ card.experiance }}</h6>
       <div class="coach-salary" *ngIf="card.discountPrecent">
-        <p class="discounted-text">{{card.discountPrecent}}% OFF</p>
-        <p class="original-price">{{card.salary | currency: 'EGP'}}</p>
-        <p class="discounted-price">{{(card.salary - (card.salary * card.discountPrecent) / 100) | currency: 'EGP'}}</p>
+        <p class="discounted-text">{{ card.discountPrecent }}% OFF</p>
+        <p class="original-price">{{ card.salary | currency: 'EGP' }}</p>
+        <p class="discounted-price">{{ (card.salary - (card.salary * card.discountPrecent) / 100) | currency: 'EGP' }}</p>
       </div>
       <div class="coach-salary" *ngIf="!card.discountPrecent">
-        <p class="discounted-price">{{card.salary | currency: 'EGP'}}</p>
+        <p class="discounted-price">{{ card.salary | currency: 'EGP' }}</p>
       </div>
     </a>
     <button class="btn btn-success" (click)="openModal()">Book</button>
   </div>
 </div>
 
-<app-coach-modal [isOpen]="isModalOpen" [card]="card" (close)="closeModal()">
-</app-coach-modal>
+<app-coach-modal [isOpen]="isModalCoachOpen" [card]="card" (close)="closeCoachModal()"></app-coach-modal>
+<app-login-modal [isOpen]="isModalLoginOpen" (close)="closeLoginModal()"></app-login-modal>

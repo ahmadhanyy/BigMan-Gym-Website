@@ -1,8 +1,7 @@
-import { IProduct } from "./iproduct";
-
 export interface IUser {
-  id: number;
-  name: string;
+  id?: number;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   phone: string;

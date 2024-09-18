@@ -1,67 +1,141 @@
-import { ElementRef, Injectable } from '@angular/core';
-import { IProduct, shippingAmount } from '../Interfaces/iproduct';
+import { Injectable } from '@angular/core';
+import { IProduct } from '../Interfaces/iproduct';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+  private apiUrl = 'http://localhost:3000'
+  prods: IProduct[] = [];
   highShippingPrice: number = 250;
   lowShippingPrice: number = 35;
-  prods : IProduct[] = [{"id": 1, "name": "test product Dumbbell Dumbbell vv Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell", "category": 3, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg", "assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "reviews": ['It is high quality and deserve every pound.', 'best value for money', 'تحفة بجد'], "returnable": true, "discountPrecent": 10, "color": ['red', 'green', 'blue', 'pink', 'orange', 'yellow', 'red', 'green', 'blue', 'pink', 'orange', 'yellow', 'red', 'green', 'blue', 'pink', 'orange', 'yellow', 'yellow', 'red', 'green', 'blue', 'pink', 'orange'], "size": ['s', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xs', 'xxs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xs', 'xxs', 's', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xs', 'xxs', 'm', 'l', 'xl', 'xxl', 'xxxl', 'xs', 'xxs'], "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 2, "name": "Barbell", "category": 3, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "ratings": [4, 3, 3, 3, 3, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "color": ['red', 'green', 'blue'], "size": ['s', 'm', 'l'], "freeShipping": true, "shippingPrice": shippingAmount.high, "isFav": false},
-                        {"id": 3, "name": "Treadmill", "category": 2, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "ratings": [3, 3, 3, 2, 2, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 15, "returnable": true, "color": ['red'], "size": ['s'], "freeShipping": false, "shippingPrice": shippingAmount.high, "isFav": false},
-                        {"id": 4, "name": "Jumb Rope", "category": 5, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "ratings": [4, 3, 3, 3, 3, 3, 2], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 10, "returnable": true, "color": ['red', 'yellow'], "size": ['s', 'm'], "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 5, "name": "Door Gym Bar", "category": 5, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "ratings": [5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 30, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 6, "name": "Dumbbell", "category": 3, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg"], "ratings": [4, 3, 3, 2, 2, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 7, "name": "Barbell", "category": 3, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp"], "ratings": [4, 3, 3, 2, 2, 3, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 5, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 8, "name": "Treadmill", "category": 2, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg"], "ratings": [4, 2, 2, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 9, "name": "Jumb Rope", "category": 5, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "ratings": [1], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 10, "name": "Door Gym Bar", "category": 5, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "ratings": [4, 3, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 11, "name": "Dumbbell Dumbbell Dumbbell vv Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell", "category": 3, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg"], "reviews": ['It is high quality and deserve every pound.', 'best value for money', 'تحفة بجد'], "discountPrecent": 10, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 12, "name": "Barbell", "category": 3, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp"], "ratings": [4, 3, 3, 3, 3, 1, 1, 5], "isFav": false, "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low},
-                        {"id": 13, "name": "Treadmill", "category": 2, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg"], "ratings": [3, 3, 3, 2, 2, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 15, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 14, "name": "Jumb Rope", "category": 5, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "ratings": [4, 3, 3, 3, 3, 3, 2], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 10, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 15, "name": "Door Gym Bar", "category": 5, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "ratings": [5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 30, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 16, "name": "Dumbbell", "category": 3, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg"], "ratings": [4, 3, 3, 2, 2, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 17, "name": "Barbell", "category": 3, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp"], "ratings": [4, 3, 3, 2, 2, 3, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "discountPrecent": 5, "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 18, "name": "Treadmill", "category": 2, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg"], "ratings": [4, 2, 2, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 19, "name": "Jumb Rope", "category": 5, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "ratings": [1], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false},
-                        {"id": 20, "name": "Door Gym Bar", "category": 5, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "ratings": [4, 3, 1, 1, 5], "reviews": ['It is high quality and deserve every pound.', 'best value for money'], "returnable": true, "freeShipping": false, "shippingPrice": shippingAmount.low, "isFav": false}];
 
-  constructor() { }
+  //http://localhost:3000/products?_sort=id&_order=asc
 
-  getProducts(): IProduct[] {
+  constructor(private httpClient: HttpClient) {
+    this.prods = [
+      {"id": 1, "name": "test product Dumbbell Dumbbell vv Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell", "categoryId": 2, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses. Versatile equipment for strength training, ideal for a range of exercises including curls and presses. Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg", "assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "returnable": true, "discountPrecent": 10, "color": ["Red", "Blue", "Green", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXS", "XXXS", "S/M", "M/L", "L/XL", "One Size", "Petite", "Tall", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXS", "XXXS", "S/M", "M/L", "L/XL", "One Size", "Petite", "Tall", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXS", "XXXS", "S/M", "M/L", "L/XL", "One Size", "Petite", "Tall", "XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXS", "XXXS", "S/M", "M/L", "L/XL", "One Size", "Petite", "Tall"], "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt", "Fit": "Regular"},
+      {"id": 2, "name": "Barbell", "categoryId": 2, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "returnable": true, "color": ["Red", "Blue", "Green", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M", "L", "XL", "XXL", "XXXL"], "freeShipping": true, "shippingPrice": 1, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 3, "name": "Treadmill", "categoryId": 1, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "discountPrecent": 15, "returnable": true, "color": ["Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M"], "freeShipping": false, "shippingPrice": 1, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 4, "name": "Jumb Rope", "categoryId": 4, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "discountPrecent": 10, "returnable": true, "color": ["red"], "size": ["XS"], "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Rubber", "productionCountry": "Egypt"},
+      {"id": 5, "name": "Door Gym Bar", "categoryId": 4, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "discountPrecent": 30, "returnable": true, "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 6, "name": "test product Dumbbell Dumbbell vv Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell", "categoryId": 2, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses. Versatile equipment for strength training, ideal for a range of exercises including curls and presses. Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg", "assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "returnable": true, "discountPrecent": 10, "color": ["Red", "Blue", "Green", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXS", "XXXS", "S/M", "M/L", "L/XL", "One Size", "Petite", "Tall"], "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 7, "name": "Barbell", "categoryId": 2, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "returnable": true, "color": ["Red", "Blue", "Green", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M", "L", "XL", "XXL", "XXXL"], "freeShipping": true, "shippingPrice": 1, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 8, "name": "Treadmill", "categoryId": 1, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "discountPrecent": 15, "returnable": true, "color": ["Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M"], "freeShipping": false, "shippingPrice": 1, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 9, "name": "Jumb Rope", "categoryId": 4, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "discountPrecent": 10, "returnable": true, "color": ["red"], "size": ["XS"], "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Rubber", "productionCountry": "Egypt"},
+      {"id": 10, "name": "Door Gym Bar", "categoryId": 4, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "discountPrecent": 30, "returnable": true, "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 11, "name": "test product Dumbbell Dumbbell vv Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell Dumbbell", "categoryId": 2, "price": 1200, "quantity": 10, "description": "Versatile equipment for strength training, ideal for a range of exercises including curls and presses.", "imageUrl": ["assets/Dumbbell.jpg", "assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "returnable": true, "discountPrecent": 10, "color": ["Red", "Blue", "Green", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M", "L", "XL", "XXL", "XXXL", "XXS", "XXXS", "S/M", "M/L", "L/XL", "One Size", "Petite", "Tall"], "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 12, "name": "Barbell", "categoryId": 2, "price": 2500, "quantity": 20, "description": "Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses. Sturdy bar for heavy lifting, perfect for squats, deadlifts, and bench presses.", "imageUrl": ["assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "returnable": true, "color": ["Red", "Blue", "Green", "Yellow", "Black", "White", "Orange", "Purple", "Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M", "L", "XL", "XXL", "XXXL"], "freeShipping": true, "shippingPrice": 1, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 13, "name": "Treadmill", "categoryId": 1, "price": 80000, "quantity": 30, "description": "Advanced treadmill with adjustable speed and incline for effective cardio workouts.", "imageUrl": ["assets/Treadmill.jpg", "assets/JumpRope.jpg", "assets/DoorGymBar.webp", "assets/Barbell.webp"], "discountPrecent": 15, "returnable": true, "color": ["Pink", "Brown", "Gray", "Cyan", "Magenta", "Beige", "Teal"], "size": ["XS", "S", "M"], "freeShipping": false, "shippingPrice": 1, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"},
+      {"id": 14, "name": "Jumb Rope", "categoryId": 4, "price": 40, "quantity": 40, "description": "Portable tool for improving cardio and agility, with adjustable length and comfortable handles.", "imageUrl": ["assets/JumpRope.jpg"], "discountPrecent": 10, "returnable": true, "color": ["red"], "size": ["XS"], "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Rubber", "productionCountry": "Egypt"},
+      {"id": 15, "name": "Door Gym Bar", "categoryId": 4, "price": 50, "quantity": 50, "description": "Easy-to-install bar for bodyweight exercises like pull-ups and push-ups, fitting most doorways.", "imageUrl": ["assets/DoorGymBar.webp"], "discountPrecent": 30, "returnable": true, "freeShipping": false, "shippingPrice": 0, "isFav": false, "brand": "Nike", "material": "Metal", "productionCountry": "Egypt"}
+    ]
+  }
+
+  getProducts() : IProduct[] {
     return this.prods;
   }
 
-  getProductsBatch(startIndex: number, batchSize: number): IProduct[] {
-    return this.prods.slice(startIndex, startIndex + batchSize);
+  getProductsBycategord(catId: number) : IProduct[] | undefined {
+    return this.prods.filter((prod)=> prod.categoryId == catId)
   }
 
-  getAllProductsLength(): number {
-    return this.prods.length;
+  getProductById(id: number) : IProduct | undefined{
+    return this.prods.find((prod)=> prod.id == id)
   }
+/*
+  getProducts(sortOption: string, filters: any): Observable<IProduct[]> {
+    let query = `?`;
 
-  calcRatersNumber(prod: IProduct): number {
-    if (!prod.ratings) {
-      return 0;
+    // Adding sorting
+    if (sortOption) {
+      query += `_sort=${this.getSortField(sortOption)}&_order=${this.getSortOrder(sortOption)}&`;
     }
-    return prod.ratings.length;
+
+    // Adding filters
+    if (filters) {
+      if (filters.minPrice) query += `price_gte=${filters.minPrice}&`;
+      if (filters.maxPrice) query += `price_lte=${filters.maxPrice}&`;
+      if (filters.freeShipping) query += `freeShipping=true&`;
+      if (filters.discount) query += `discount=true&`;
+    }
+
+    return this.httpClient.get<IProduct[]>(`${this.apiUrl}/products${query}`);
   }
 
-  calcAverageRating(prod: IProduct): number {
-    // Check if the array is empty to avoid division by zero
-    if (!prod.ratings) {
-      return 0;
+  getSortField(sortOption: string): string {
+    switch (sortOption) {
+      case 'price-asc':
+        return 'price';
+      case 'price-desc':
+        return 'price';
+      case 'rating':
+        return 'ratings';
+      case 'newest':
+        return 'id';
+      default:
+        return 'price';
     }
-    // Sum all the ratings
-    const sum = prod.ratings.reduce((a, b) => a + b, 0);
-    // Calculate the average
-    const average = sum / prod.ratings.length;
-    // Round the average to the nearest integer and ensure it falls within 1-5
-    const roundedAverage = Math.round(average);
-    return Math.max(1, Math.min(5, roundedAverage)); // Ensures the result is between 1 and 5
   }
+
+  getSortOrder(sortOption: string): string {
+    return sortOption.includes('desc') ? 'desc' : 'asc';
+  }
+
+  getProductsBycategord(categoryd: number, sort: string = 'price-asc', filters: any = {}): Observable<IProduct[]> {
+    let params = new HttpParams().set('categoryd', categoryd.toString());
+
+    // Same sorting and filtering logic as `getProducts` method
+
+    if (sort === 'price-asc') {
+      params = params.set('_sort', 'price').set('_order', 'asc');
+    } else if (sort === 'price-desc') {
+      params = params.set('_sort', 'price').set('_order', 'desc');
+    } else if (sort === 'rating') {
+      params = params.set('_sort', 'ratings').set('_order', 'desc');
+    } else if (sort === 'newest') {
+      params = params.set('_sort', 'id').set('_order', 'desc');
+    }
+
+    if (filters.minPrice !== undefined) {
+      params = params.set('price_gte', filters.minPrice.toString());
+    }
+    if (filters.maxPrice !== undefined) {
+      params = params.set('price_lte', filters.maxPrice.toString());
+    }
+    if (filters.freeShipping) {
+      params = params.set('shipping', 'free');
+    }
+    if (filters.discount) {
+      params = params.set('discount', 'true');
+    }
+
+    return this.httpClient.get<IProduct[]>(`${this.apiUrl}/products`, { params });
+  }
+
+  getMinPriceSortedProducts(): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(`${this.apiUrl}/products?_sort=price&_order=asc`);
+  }
+
+  getMaxPriceSortedProducts(): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(`${this.apiUrl}/products?_sort=price&_order=desc`);
+  }
+
+  getNewestSortedProducts(): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(`${this.apiUrl}/products?_sort=id&_order=desc`);
+  }
+
+  getRatingSortedProducts(): Observable<IProduct[]> {
+    return this.httpClient.get<IProduct[]>(`${this.apiUrl}/products?_sort=ratings&_order=desc`);
+  }
+
+  updateProduct(id: number, prod: IProduct) {
+    return this.httpClient.put<IProduct>(`${this.apiUrl}/products/${id}`, prod);
+  }
+*/
 
   convertListTo2DList(prodsList: IProduct[], size: number): IProduct[][] {
     const rows: IProduct[][] = [];

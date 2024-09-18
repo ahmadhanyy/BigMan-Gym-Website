@@ -1,0 +1,14 @@
+<div class="modal" *ngIf="isOpen" (click)="onBackdropClick($event)">
+  <div class="modal-content">
+    <div class="close-modal">
+      <span class="close-btn" (click)="closeModal()">&times;</span>
+    </div>
+    <div class="header-section">
+      <p class="login-text">Register / Log in</p>
+      <div class="protected-section">
+        <img class="protected-icon" alt="icon" src="assets/icon-protection-green.png">
+        <p>Your information is protected.</p>
+      </div>
+    </div>
+  </div>
+</div>

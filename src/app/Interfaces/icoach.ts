@@ -1,7 +1,7 @@
 import { ITimeSlot } from "./itime-slot";
 
 export interface ICoach {
-  id: number;
+  id?: number;
   name: string;
   salary: number;
   avilableTime?: ITimeSlot[];

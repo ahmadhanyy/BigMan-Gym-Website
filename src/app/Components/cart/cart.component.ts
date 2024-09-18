@@ -3,7 +3,6 @@ import { IProduct, shippingAmount } from '../../Interfaces/iproduct';
 import { CartService } from '../../Services/cart.service';
 import { ProductService } from '../../Services/product.service';
 import { ICartItem } from '../../Interfaces/icart-item';
-import { WishlistService } from '../../Services/wishlist.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,25 +15,28 @@ export class CartComponent implements OnInit {
   textOnList: string = 'More To Love';
 
   constructor(private cartService: CartService,
-              public prodService: ProductService,
-              private wishlistService: WishlistService) {}
+              public prodService: ProductService) {
+              }
 
   ngOnInit(): void {
     this.cartItems = this.cartService.getCartItems();
     this.productsList = this.prodService.getProducts();
+    //this.prodService.getProducts().subscribe((data) => {
+    //  this.productsList = data;
+    //});
   }
 
   getSubTotalPrice(): number {
     let subTotalPrice: number = 0;
     for (let i = 0; i < this.cartItems.length; i++) {
-      let discountPercent = this.cartItems[i].product.discountPrecent ?? 0;
+      let discountPercent = this.cartItems[i].discountPrecent ?? 0;
       let itemPrice: number;
       if (discountPercent) {
-        itemPrice = this.cartItems[i].product.price - ((this.cartItems[i].product.price * discountPercent) / 100);
+        itemPrice = this.cartItems[i].price - ((this.cartItems[i].price * discountPercent) / 100);
       } else {
-        itemPrice = this.cartItems[i].product.price;
+        itemPrice = this.cartItems[i].price;
       }
-      subTotalPrice += itemPrice * this.cartItems[i].quantity;
+      subTotalPrice += itemPrice * this.cartItems[i].count;
     }
     return subTotalPrice;
   }
@@ -42,15 +44,15 @@ export class CartComponent implements OnInit {
   getShippigPrice(): number {
     let shippingPrice: number = 0;
     for (let i = 0; i < this.cartItems.length; i++) {
-      if (this.cartItems[i].product.shippingPrice == shippingAmount.high)
+      if (this.cartItems[i].shippingPrice == shippingAmount.high)
       {
-        for (let j = 0; j < this.cartItems[i].quantity; j++) {
+        for (let j = 0; j < this.cartItems[i].count; j++) {
           shippingPrice += this.prodService.highShippingPrice;
         }
       }
-      else if (this.cartItems[i].product.shippingPrice == shippingAmount.low)
+      else if (this.cartItems[i].shippingPrice == shippingAmount.low)
       {
-        for (let j = 0; j < this.cartItems[i].quantity; j++) {
+        for (let j = 0; j < this.cartItems[i].count; j++) {
           shippingPrice += this.prodService.lowShippingPrice;
         }
       }
@@ -64,25 +66,14 @@ export class CartComponent implements OnInit {
   }
 
   removeItem(item: ICartItem): void {
-    this.cartService.removeFromCart(item.product);
-    this.cartItems = this.cartService.getCartItems();
+    this.cartService.removeFromCart(item);
   }
 
-  addItem(item: IProduct): void {
-    this.cartService.addToCart(item, 1);
-    this.cartItems = this.cartService.getCartItems();
+  incrementItem(item: ICartItem): void {
+    this.cartService.addToCart(item);
   }
 
   decrementItem(item: ICartItem): void {
-    this.cartService.removeOneFromCart(item.product);
-    this.cartItems = this.cartService.getCartItems();
-  }
-
-  addToWishlist(item: IProduct): void {
-    this.wishlistService.addToWishlist(item);
-  }
-
-  removeFromWishlist(item: IProduct): void {
-    this.wishlistService.removeFromWishlist(item);
+    this.cartService.decrementItem(item);
   }
 }

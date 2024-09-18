@@ -5,25 +5,50 @@
       <form action="/search" method="GET">
         <input type="text" placeholder="What are you looking for?">
       </form>
-      <ul>
-        <li class="login-section">
-          <a routerLink="/login">
+      <div class="icons">
+        <div class="dropdown">
+          <div class="login-section dropdown-button">
             <img class="login-icon" src="assets/icon-login.png" alt="login icon"/>
             <span class="login-text">{{loginText}}</span>
-          </a>
-        </li>
-        <li class="wishlist-section">
+            <span class="arrow down-arrow">&#8250;</span>
+            <span class="arrow up-arrow">&#8249;</span>
+          </div>
+          <div class="dropdown-content">
+            <div class="login-part" [hidden]="isLoggedIn">
+              <button class="log-btn" (click)="login()">Login</button>
+              <button class="signup-btn" (click)="openModal()">Register</button>
+            </div>
+            <div class="logout-part" [hidden]="!isLoggedIn">
+              <div class="profile-data">
+                <img class="profile-img" src="assets/icon-login.png" alt="profile img">
+                <p class="profile-name">Welcome, Muhammed</p>
+              </div>
+              <button class="log-btn" (click)="logout()">Logout</button>
+            </div>
+            <hr>
+            <div class="list">
+              <a routerLink = "/login">My Account</a>
+              <a routerLink = "/login">My Orders</a>
+              <a routerLink = "/login">Vouchers</a>
+              <a routerLink = "/inbox">Inbox</a>
+              <a routerLink = "/settings">Settings</a>
+            </div>
+          </div>
+        </div>
+        <div class="wishlist-section">
           <a routerLink="/wishlist">
             <img class="wishlist-icon" src="assets/icon-wishlist.png" alt="wishlist icon"/>
           </a>
-        </li>
-        <li class="cart-section">
+        </div>
+        <div class="cart-section">
           <a routerLink="/cart">
             <img class="cart-icon" src="assets/icon-cart.png" alt="cart icon"/>
             <span class="cart-count">{{cartCount}}</span>
           </a>
-        </li>
-      </ul>
+        </div>
+      </div>
     </div>
   </div>
 </nav>
+
+<app-login-modal [isOpen]="isModalOpen" (close)="closeModal()"></app-login-modal>

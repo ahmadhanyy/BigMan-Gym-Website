@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
 
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
@@ -11,10 +12,7 @@ import { ImageCarouselComponent } from './Components/image-carousel/image-carous
 import { ProductsComponent } from './Components/products/products.component';
 import { MembershipsComponent } from './Components/memberships/memberships.component';
 import { BranchesComponent } from './Components/branches/branches.component';
-import { AboutUsComponent } from './Components/about-us/about-us.component';
 import { CartComponent } from './Components/cart/cart.component';
-import { LogInComponent } from './Components/log-in/log-in.component';
-import { SignUpComponent } from './Components/sign-up/sign-up.component';
 import { ProfileComponent } from './Components/profile/profile.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { CoachesComponent } from './Components/coaches/coaches.component';
@@ -37,6 +35,13 @@ import { CoachGridCardComponent } from './Components/coach-grid-card/coach-grid-
 import { CoachListCardComponent } from './Components/coach-list-card/coach-list-card.component';
 import { ProductCarouselComponent } from './Components/product-carousel/product-carousel.component';
 import { CoachCarouselComponent } from './Components/coach-carousel/coach-carousel.component';
+import { PageNotFoundComponent } from './Components/page-not-found/page-not-found.component';
+import { LoginModalComponent } from './Components/login-modal/login-modal.component';
+import { ProductDetailsComponent } from './Components/product-details/product-details.component';
+import { CoachDetailsComponent } from './Components/coach-details/coach-details.component';
+import { RegisterModalComponent } from './Components/register-modal/register-modal.component';
+import { LogoutDialogComponent } from './Components/logout-dialog/logout-dialog.component';
+import { ReviewsComponent } from './Components/reviews/reviews.component';
 
 @NgModule({
   declarations: [
@@ -48,10 +53,7 @@ import { CoachCarouselComponent } from './Components/coach-carousel/coach-carous
     ProductsComponent,
     MembershipsComponent,
     BranchesComponent,
-    AboutUsComponent,
     CartComponent,
-    LogInComponent,
-    SignUpComponent,
     ProfileComponent,
     NavbarComponent,
     CoachesComponent,
@@ -73,12 +75,20 @@ import { CoachCarouselComponent } from './Components/coach-carousel/coach-carous
     CoachGridCardComponent,
     CoachListCardComponent,
     ProductCarouselComponent,
-    CoachCarouselComponent
+    CoachCarouselComponent,
+    PageNotFoundComponent,
+    LoginModalComponent,
+    ProductDetailsComponent,
+    CoachDetailsComponent,
+    RegisterModalComponent,
+    LogoutDialogComponent,
+    ReviewsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()

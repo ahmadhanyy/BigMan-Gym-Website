@@ -6,8 +6,8 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./load-button.component.scss']
 })
 export class LoadButtonComponent {
-  @Input() totalPages: number = 8;
-  @Input() currentPage: number = 5;
+  @Input() totalPages: number = 9;
+  @Input() currentPage: number = 4;
   @Output() pageChange = new EventEmitter<number>();
   goToPageNumber: string | null = null;
 

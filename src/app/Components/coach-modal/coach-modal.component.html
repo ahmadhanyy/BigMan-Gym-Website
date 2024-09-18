@@ -1,4 +1,4 @@
-<div class="modal" *ngIf="isOpen">
+<div class="modal" *ngIf="isOpen" (click)="onBackdropClick($event)">
   <div class="close-modal">
     <span class="close-btn" (click)="closeModal()">&times;</span>
   </div>
@@ -12,14 +12,14 @@
           <button (click)="contact(card)">Subscribe</button>
         </div>
         <div class="details-btn">
-          <a href="/products/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
+          <a href="/coach/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
         </div>
       </div>
     </div>
     <div class="details-section">
       <div class="coach-info">
         <p class="coach-name">{{ card.name }}</p>
-        <app-star-rating class="rate-stars" [rating]="coachService.calcAverageRating(card)" [ratersNo]="coachService.calcRatersNumber(card)"></app-star-rating>
+        <app-star-rating class="rate-stars" [coachCard]="card"></app-star-rating>
       </div>
       <div class="coach-payment">
           <div class="coach-salary" *ngIf="card.discountPrecent">

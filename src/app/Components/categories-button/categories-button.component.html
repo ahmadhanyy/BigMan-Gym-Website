@@ -6,8 +6,10 @@
     <span class="arrow up-arrow">&#8249;</span>
   </button>
   <div class="dropdown-content">
-    <ng-container *ngFor="let cat of categories; let i = index">
-      <a href="/products/{{cat.id}}">{{cat.name}}</a>
-    </ng-container>
+    <div class="list">
+      <ng-container *ngFor="let cat of categories; let i = index">
+        <a [routerLink] = "['/products', cat.id]">{{cat.name}}</a>
+      </ng-container>
+    </div>
   </div>
 </div>
