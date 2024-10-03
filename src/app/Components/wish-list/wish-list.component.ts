@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { WishlistService } from '../../Services/wishlist.service';
 import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
+import { UserService } from '../../Services/user.service';
+import { ModalService } from '../../Services/modal.service';
+import { IWishlistItem } from '../../Interfaces/iwishlist-item';
+import { INewWishlistItem } from '../../Interfaces/inew-wishlist-item';
 
 @Component({
   selector: 'app-wish-list',
@@ -9,32 +13,62 @@ import { ProductService } from '../../Services/product.service';
   styleUrl: './wish-list.component.scss'
 })
 export class WishListComponent implements OnInit {
-  wishlistItems: IProduct[] = [];
+  wishlistItems: IWishlistItem[] = [];
   prodsList: IProduct[] = [];
   textOnList: string = 'More To Love';
+  userId: number | null = null;
 
-  constructor(private wishlistService: WishlistService, public prodService: ProductService) {}
+  constructor(private wishlistService: WishlistService,
+              private prodService: ProductService,
+              private userService: UserService,
+              private modalService: ModalService) {}
 
   ngOnInit(): void {
-    this.wishlistItems = this.wishlistService.getWishlistItems();
-    //this.prodService.getProducts().subscribe((data) => {
-    //  this.prodsList = data;
-    //});
+    // Subscribe to the loggedUserId$ observable to get real-time updates
+    this.userService.loggedUserId$.subscribe((id) => {
+      this.userId = id;
+    });
+
+    this.prodService.getProducts().subscribe((response: any) => {
+      this.prodsList = response.data;
+    });
+
+  }
+
+  getWishlistItems(): void {
+    if (!this.userId) {
+      this.modalService.openLoginModal();
+    }
+    else{
+      this.wishlistService.getWishlistItems(this.userId).subscribe((response: any) => {
+        this.wishlistItems = response.data;
+      });
+    }
   }
 
   clearWishlist(): void {
-    this.wishlistService.clearWishlist();
-    this.wishlistItems = [];
+    if (!this.userId) {
+      this.modalService.openLoginModal();
+    }
+    else{
+      this.wishlistService.clearWishlist(this.userId);
+    }
   }
 
-  removeItem(item: IProduct): void {
-    this.wishlistService.removeFromWishlist(item);
-    this.wishlistItems = this.wishlistService.getWishlistItems();
+  removeItem(item: IWishlistItem): void {
+    this.wishlistService.removeFromWishlist(item.documentId);
   }
 
-  addItem(item: IProduct): void {
+  addItem(item: INewWishlistItem): void {
     this.wishlistService.addToWishlist(item);
-    this.wishlistItems = this.wishlistService.getWishlistItems();
+  }
+
+  getProdByItem(item: IWishlistItem): IProduct {
+    let prod!: IProduct;
+    this.prodService.getProductById(item.prodId).subscribe((response: any) => {
+      prod = response.data;
+    });
+    return prod;
   }
 
 }

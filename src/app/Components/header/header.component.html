@@ -14,24 +14,24 @@
             <span class="arrow up-arrow">&#8249;</span>
           </div>
           <div class="dropdown-content">
-            <div class="login-part" [hidden]="isLoggedIn">
-              <button class="log-btn" (click)="login()">Login</button>
-              <button class="signup-btn" (click)="openModal()">Register</button>
+            <div class="login-part" [hidden]="isUserLoggedIn">
+              <button class="log-btn" (click)="login('aa@aa.com', '12345678')">Login</button>
+              <button class="signup-btn" (click)="register('khaled', 'kk@kk.com', '12345678')">Register</button>
             </div>
-            <div class="logout-part" [hidden]="!isLoggedIn">
+            <div class="logout-part" [hidden]="!isUserLoggedIn">
               <div class="profile-data">
                 <img class="profile-img" src="assets/icon-login.png" alt="profile img">
-                <p class="profile-name">Welcome, Muhammed</p>
+                <p class="profile-name">{{loginText}}</p>
               </div>
               <button class="log-btn" (click)="logout()">Logout</button>
             </div>
             <hr>
             <div class="list">
-              <a routerLink = "/login">My Account</a>
-              <a routerLink = "/login">My Orders</a>
-              <a routerLink = "/login">Vouchers</a>
+              <a routerLink = "/account">My Account</a>
+              <a routerLink = "/orders">My Orders</a>
+              <a routerLink = "/vouchers">Vouchers</a>
+              <a routerLink = "/user/reviews">Reviews</a>
               <a routerLink = "/inbox">Inbox</a>
-              <a routerLink = "/settings">Settings</a>
             </div>
           </div>
         </div>

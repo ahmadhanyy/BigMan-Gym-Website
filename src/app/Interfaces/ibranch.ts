@@ -1,6 +1,7 @@
 export interface IBranch {
-    id?: number;
-    name: string;
-    address: string;
-    phone: string;
+  id: number;
+  documentId: string;
+  name: string;
+  address: string;
+  phone: string;
 }

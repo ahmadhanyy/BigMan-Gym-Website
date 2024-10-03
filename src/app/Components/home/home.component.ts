@@ -18,13 +18,11 @@ export class HomeComponent implements OnInit {
   constructor(private coachService: CoachService, private prodService: ProductService) {}
 
   ngOnInit(): void {
-    //this.coachService.getCoaches().subscribe((data) => {
-    //  this.coachesList = data;
-    //});
-    //this.prodService.getProducts().subscribe((data) => {
-    //  this.productsList = data;
-    //});
-    this.coachesList = this.coachService.getCoaches();
-    this.productsList = this.prodService.getProducts();
+    this.coachService.getCoaches().subscribe((response: any) => {
+      this.coachesList = response.data;
+    });
+    this.prodService.getProducts().subscribe((response: any) => {
+      this.productsList = response.data;
+    });
   }
 }

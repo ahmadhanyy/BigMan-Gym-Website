@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { IProduct, shippingAmount } from '../../Interfaces/iproduct';
-import { CartService } from '../../Services/cart.service';
+import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
 import { ICartItem } from '../../Interfaces/icart-item';
+import { IUser } from '../../Interfaces/iuser';
+import { CartItemService } from '../../Services/cart-item.service';
 
 @Component({
   selector: 'app-cart',
@@ -10,29 +11,27 @@ import { ICartItem } from '../../Interfaces/icart-item';
   styleUrl: './cart.component.scss'
 })
 export class CartComponent implements OnInit {
+  loggedUser : IUser | undefined;
   cartItems: ICartItem[] = [];
   productsList: IProduct[] = [];
   textOnList: string = 'More To Love';
 
-  constructor(private cartService: CartService,
-              public prodService: ProductService) {
+  constructor(private prodService: ProductService,
+              private cartItemService: CartItemService) {
               }
 
   ngOnInit(): void {
-    this.cartItems = this.cartService.getCartItems();
-    this.productsList = this.prodService.getProducts();
-    //this.prodService.getProducts().subscribe((data) => {
-    //  this.productsList = data;
-    //});
+    //this.cartItems = this.cartService.getCartByUserId();
+    //this.productsList = this.prodService.getProducts();
   }
-
+/*
   getSubTotalPrice(): number {
     let subTotalPrice: number = 0;
     for (let i = 0; i < this.cartItems.length; i++) {
-      let discountPercent = this.cartItems[i].discountPrecent ?? 0;
+      let discountPercent = this.prodService.getProductById(this.cartItems[i].prodId).discountPrecent ?? 0;
       let itemPrice: number;
       if (discountPercent) {
-        itemPrice = this.cartItems[i].price - ((this.cartItems[i].price * discountPercent) / 100);
+        itemPrice = this.cartItems[i].prodId.price - ((this.cartItems[i].price * discountPercent) / 100);
       } else {
         itemPrice = this.cartItems[i].price;
       }
@@ -61,7 +60,7 @@ export class CartComponent implements OnInit {
   }
 
   clearCart(): void {
-    this.cartService.clearCart();
+    this.cartItemService.clearCart();
     this.cartItems = [];
   }
 
@@ -76,4 +75,5 @@ export class CartComponent implements OnInit {
   decrementItem(item: ICartItem): void {
     this.cartService.decrementItem(item);
   }
+*/
 }

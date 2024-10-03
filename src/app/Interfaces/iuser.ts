@@ -1,14 +1,7 @@
 export interface IUser {
-  id?: number;
-  firstName: string;
-  lastName: string;
+  id: number;
+  documentId: string;
+  username: string;
   email: string;
   password: string;
-  phone: string;
-  address: {
-    buildingNo: string;
-    street: string;
-    city: string;
-    moreInfo?: string;
-  };
 }

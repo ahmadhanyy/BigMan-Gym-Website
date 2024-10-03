@@ -10,55 +10,27 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductsGridViewComponent implements OnInit  {
   prodRows: IProduct[][] = [];
-  @Input() sortOption: string = 'price-asc';
-  @Input() filters: any = {};
-
+  categoryId: number | undefined;
 
   constructor(public prodService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.prodRows = this.prodService.convertListTo2DList(this.prodService.getProducts(), 4);
-    /*
     // Subscribe to route parameters to determine if a category is passed
     this.route.params.subscribe((params) => {
-      // Extract category ID, if present, otherwise it will be NaN
-      const categoryId = +params['category'];
-
-      if (isNaN(categoryId)) {
-        // No category provided, so load all products
-        this.getAllProducts();
-      } else {
-        // Category ID exists, load products by that category
-        this.getProductsByCategory(categoryId);
-      }
+      this.categoryId = +params['category'];  // Extract category ID
+      this.loadProducts();  // Fetch products based on category
     });
-    */
   }
-/*
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['sortOption'] || changes['filters']) {
-      this.updateProducts();
+
+  loadProducts(): void {
+    if (this.categoryId) {
+      this.prodService.getProductsByCategory(this.categoryId).subscribe((response: any) => {
+        this.prodRows = this.prodService.convertListTo2DList(response.data, 4);  // Convert to 2D list for grid view
+      });
+    } else {
+      this.prodService.getProducts().subscribe((response: any) => {
+        this.prodRows = this.prodService.convertListTo2DList(response.data, 4);  // Load all products
+      });
     }
   }
-
-  // Get all products when no category is provided
-  getAllProducts(): void {
-    this.prodService.getProducts(this.sortOption, this.filters).subscribe((data) => {
-      this.prodRows = this.prodService.convertListTo2DList(data, 4);
-    });
-  }
-
-  // Get products by category when a category is provided
-  getProductsByCategory(categoryId: number): void {
-    this.prodService.getProductsByCategory(categoryId, this.sortOption, this.filters).subscribe((data) => {
-      this.prodRows = this.prodService.convertListTo2DList(data, 4);
-    });
-  }
-
-  updateProducts() {
-    this.prodService.getProducts(this.sortOption, this.filters).subscribe((data) => {
-      this.prodRows = this.prodService.convertListTo2DList(data, 4);
-    });
-  }
-*/
 }

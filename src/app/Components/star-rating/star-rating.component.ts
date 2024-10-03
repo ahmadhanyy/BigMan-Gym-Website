@@ -25,21 +25,21 @@ export class StarRatingComponent {
   constructor(private reviewService: ReviewService){}
 
   ngOnInit() {
-    if(this.coachCard){
-      this.rating = this.reviewService.calcCoachAverageRating(this.coachCard.id!);
-      this.ratersNumber = this.reviewService.calcCoachRatersNumber(this.coachCard.id!);
+/*     if(this.coachCard){
+      this.rating = this.reviewService.calcRatingAverage(this.coachCard.id!, false);
+      this.ratersNumber = this.reviewService.calcRatersNumber(this.coachCard.id!, false);
     }
     if(this.prodCard){
-      this.rating = this.reviewService.calcProdAverageRating(this.prodCard.id!);
-      this.ratersNumber = this.reviewService.calcProdRatersNumber(this.prodCard.id!);
+      this.rating = this.reviewService.calcRatingAverage(this.prodCard.id!, true);
+      this.ratersNumber = this.reviewService.calcRatersNumber(this.prodCard.id!, true);
     }
     if(this.prodReviewId){
-      this.rating = this.reviewService.getProdReviewById(this.prodReviewId)?.rating!;
+      this.rating = this.reviewService.getReviewById(this.prodReviewId)?.rating!;
     }
     if(this.coachReviewId){
-      this.rating = this.reviewService.getCoachReviewById(this.coachReviewId)?.rating!;
+      this.rating = this.reviewService.getReviewById(this.coachReviewId)?.rating!;
     }
-    this.stars = Array(this.starCount).fill(false);
+    this.stars = Array(this.starCount).fill(false); */
   }
 
   showIcon(index: number) {

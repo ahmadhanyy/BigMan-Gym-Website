@@ -5,14 +5,14 @@
   <div class="modal-content">
     <div class="img-section">
       <div class="coach-img">
-        <img alt="coach image" src={{card.imageUrl}}>
+        <img alt="coach image" [src]="apiUrl + card.image.url">
       </div>
       <div class="payment-section">
         <div class="sub-btn">
           <button (click)="contact(card)">Subscribe</button>
         </div>
         <div class="details-btn">
-          <a href="/coach/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
+          <a routerLink="/coach/{{card.id}}" target="_blank"><button class="view-details-btn">View Details</button></a>
         </div>
       </div>
     </div>
@@ -33,16 +33,16 @@
       </div>
       <hr>
       <div class="coach-about">
-        <p class="coach-intro">{{ card.introduction }}</p>
+        <p class="coach-intro">{{ card.details }}</p>
       </div>
       <hr>
-      <div class="coach-sessions" *ngIf="card.avilableTime">
-        <p class="session-label">Session: {{chosenTime.day.toUpperCase()}} - {{chosenTime.hour}}</p>
+      <div class="coach-sessions" *ngIf="card.coach_times">
+        <p class="session-label">Session: {{chosenTime.day.toUpperCase()}} - {{chosenTime.time}}</p>
         <p class="session-duration">Note: Sessions duration is 2 hours only.</p>
         <ng-container *ngFor="let time of visibleSessions">
-          <button class="session-btn" (click)="chooseTime(time)" [class.active]="chosenTime === time">{{time.day.toUpperCase()}} - {{time.hour}}</button>
+          <button class="session-btn" (click)="chooseTime(time)" [class.active]="chosenTime === time">{{time.day.toUpperCase()}} - {{time.time}}</button>
         </ng-container>
-        <span class="show-more-btns" *ngIf="card.avilableTime.length > 10 && !showAllSessions" (click)="showMoreSessions()">View more &#x25BC;</span>
+        <span class="show-more-btns" *ngIf="card.coach_times.length > 10 && !showAllSessions" (click)="showMoreSessions()">View more &#x25BC;</span>
       </div>
     </div>
   </div>

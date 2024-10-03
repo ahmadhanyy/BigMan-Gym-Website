@@ -1,5 +1,6 @@
 export interface IMembership {
-    id?: number;
+    id: number;
+    documentId: string;
     name: string;
     price: number;
     duration: string;

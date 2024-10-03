@@ -7,12 +7,12 @@
 .container-fluid{
   display: flex;
   flex-direction: row;
-  justify-content: center;
   align-items: center;
   width: 100%;
   padding: 1px 10px 10px 10px;
   background-color: rgb(30, 30, 30);
   gap: 60px;
+  padding-left: 180px;
 }
 
 .nav-btns{

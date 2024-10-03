@@ -1,27 +1,49 @@
 export interface IProduct {
-  id?: number;
+  id: number;
+  documentId: string;
   name: string;
   categoryId: number;
   price: number;
   quantity: number;
   description: string;
-  imageUrl: string[];
+  images: IImage[];
   returnable: boolean;
   freeShipping: boolean;
-  shippingPrice: shippingAmount;
+  shippingPrice: number;
   discountPrecent?: number;
-  priceAfterDiscount?: number;
-  isFav: boolean;
-  color?: string[];
-  size?: string[];
   material?: string;
   productionCountry: string;
   Fit?: string;
   brand: string;
+  prod_colors: IProdColor[];
+  prod_sizes: IProdSize[];
 }
 
-export enum shippingAmount {
-  low,
-  high
+export interface IImageFormat {
+  name: string;
+  hash: string;
+  ext: string;
+  mime: string;
+  width: number;
+  height: number;
+  url: string;
 }
 
+export interface IImage {
+  id: number;
+  name: string;
+  url: string;
+  formats: {
+    thumbnail: IImageFormat;
+  };
+}
+
+export interface IProdColor {
+  id: number;
+  color: string;
+}
+
+export interface IProdSize {
+  id: number;
+  size: string;
+}

@@ -10,40 +10,27 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ProductsListViewComponent implements OnInit {
   prodsList: IProduct[] = [];
+  categoryId: number | undefined;
 
   constructor(public prodService: ProductService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.prodsList = this.prodService.getProducts();
-    /*
     // Subscribe to route parameters to determine if a category is passed
     this.route.params.subscribe((params) => {
-      // Extract category ID, if present, otherwise it will be NaN
-      const categoryId = +params['category'];
-
-      if (isNaN(categoryId)) {
-        // No category provided, so load all products
-        this.getAllProducts();
-      } else {
-        // Category ID exists, load products by that category
-        this.getProductsByCategory(categoryId);
-      }
-    });
-  */
-  }
-/*
-  // Get all products when no category is provided
-  getAllProducts(): void {
-    //this.prodService.getProducts().subscribe((data) => {
-    //  this.prodsList = data;
-    //});
-  }
-
-  // Get products by category when a category is provided
-  getProductsByCategory(categoryId: number): void {
-    this.prodService.getProductsByCategory(categoryId).subscribe((data) => {
-      this.prodsList = data;
+      this.categoryId = +params['category'];  // Extract category ID
+      this.loadProducts();  // Fetch products based on category
     });
   }
-*/
+
+  loadProducts(): void {
+    if (this.categoryId) {
+      this.prodService.getProductsByCategory(this.categoryId).subscribe((response: any) => {
+        this.prodsList = response.data;  // Fetch products based on category
+      });
+    } else {
+      this.prodService.getProducts().subscribe((response: any) => {
+        this.prodsList = response.data;  // Load all products
+      });
+    }
+  }
 }

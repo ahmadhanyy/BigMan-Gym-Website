@@ -2,7 +2,8 @@ import { Component, Input, Renderer2 } from '@angular/core';
 import { ICoach } from '../../Interfaces/icoach';
 import { CoachService } from '../../Services/coach.service';
 import { ModalService } from '../../Services/modal.service';
-import { AuthService } from '../../Services/auth.service';
+import { UserService } from '../../Services/user.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-coach-list-card',
@@ -10,17 +11,18 @@ import { AuthService } from '../../Services/auth.service';
   styleUrl: './coach-list-card.component.scss'
 })
 export class CoachListCardComponent {
+  apiUrl = environment.imageApi;
   @Input() card!: ICoach;
   isModalCoachOpen = false;
   isModalLoginOpen = false;
 
   constructor(public coachService: CoachService,
     private renderer: Renderer2,
-    private authService: AuthService,
-    private modalService: ModalService) {}
+    private modalService: ModalService,
+    private userService: UserService) {}
 
   openModal() {
-    if(this.authService.isLoggedIn) {
+    if(this.userService.getToken()) {
       this.isModalCoachOpen = true;
       this.renderer.addClass(document.body, 'modal-open');
     }

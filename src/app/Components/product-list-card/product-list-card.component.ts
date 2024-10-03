@@ -1,10 +1,11 @@
-import { Component, Input, Renderer2 } from '@angular/core';
+import { Component, Input, OnInit, Renderer2 } from '@angular/core';
 import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
 import { WishlistService } from '../../Services/wishlist.service';
-import { AuthService } from '../../Services/auth.service';
 import { ModalService } from '../../Services/modal.service';
 import { ReviewService } from '../../Services/review.service';
+import { UserService } from '../../Services/user.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-list-card',
@@ -12,6 +13,7 @@ import { ReviewService } from '../../Services/review.service';
   styleUrl: './product-list-card.component.scss'
 })
 export class ProductListCardComponent {
+  apiUrl = environment.imageApi;
   @Input() card!: IProduct;
   isModalProdOpen = false;
   isModalLoginOpen = false;
@@ -19,12 +21,12 @@ export class ProductListCardComponent {
   constructor(
     public reviewService: ReviewService,
     private renderer: Renderer2,
-    private authService: AuthService,
     private modalService: ModalService,
-    private wishlistService: WishlistService) {}
+    private wishlistService: WishlistService,
+    private userService: UserService) {}
 
     openModal() {
-      if(this.authService.isLoggedIn) {
+      if(this.userService.getToken()) {
         this.isModalProdOpen = true;
         this.renderer.addClass(document.body, 'modal-open');
       }
@@ -45,11 +47,15 @@ export class ProductListCardComponent {
     }
 
   addToWishlist(product: IProduct) {
-    this.wishlistService.addToWishlist(product);
+    //this.wishlistService.addToWishlist(product);
   }
 
   removeFromWishlist(product: IProduct) {
-    this.wishlistService.removeFromWishlist(product);
+    //this.wishlistService.removeFromWishlist(product);
+  }
+
+  isInWishlist(card: IProduct) : boolean{
+    return true;
   }
 
 }

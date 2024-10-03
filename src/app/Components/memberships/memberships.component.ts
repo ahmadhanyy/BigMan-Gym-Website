@@ -13,10 +13,9 @@ export class MembershipsComponent implements OnInit {
   constructor(private memService: MembershipService) {}
 
   ngOnInit(): void {
-    //this.memService.getMemberships().subscribe((data) => {
-    //  this.membershipsList = data;
-    //});
-    this.membershipsList = this.memService.getMemberships();
+    this.memService.getMemberships().subscribe((response: any) => {
+      this.membershipsList = response.data;
+    });
   }
 
 }

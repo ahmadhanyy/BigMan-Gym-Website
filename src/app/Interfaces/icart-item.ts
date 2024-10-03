@@ -1,17 +1,9 @@
-import { shippingAmount } from "./iproduct";
-
 export interface ICartItem {
-  id?: number;
-  prodId?: number;
-  prodQuantity: number;
-  prodName: string;
-  prodCategory: number;
+  id: number;
+  documentId: string;
+  userId: number;
+  prodId: number;
   count: number;
   color?: string;
   size?: string;
-  price: number;
-  prodImageUrl: string[];
-  freeShipping: boolean;
-  shippingPrice: shippingAmount;
-  discountPrecent?: number;
 }

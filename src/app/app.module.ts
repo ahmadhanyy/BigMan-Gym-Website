@@ -13,7 +13,6 @@ import { ProductsComponent } from './Components/products/products.component';
 import { MembershipsComponent } from './Components/memberships/memberships.component';
 import { BranchesComponent } from './Components/branches/branches.component';
 import { CartComponent } from './Components/cart/cart.component';
-import { ProfileComponent } from './Components/profile/profile.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { CoachesComponent } from './Components/coaches/coaches.component';
 import { ProductsListViewComponent } from './Components/products-list-view/products-list-view.component';
@@ -42,6 +41,11 @@ import { CoachDetailsComponent } from './Components/coach-details/coach-details.
 import { RegisterModalComponent } from './Components/register-modal/register-modal.component';
 import { LogoutDialogComponent } from './Components/logout-dialog/logout-dialog.component';
 import { ReviewsComponent } from './Components/reviews/reviews.component';
+import { AccountComponent } from './Components/account/account.component';
+import { OrdersComponent } from './Components/orders/orders.component';
+import { InboxComponent } from './Components/inbox/inbox.component';
+import { VouchersComponent } from './Components/vouchers/vouchers.component';
+import { UserReviewsComponent } from './Components/user-reviews/user-reviews.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +58,6 @@ import { ReviewsComponent } from './Components/reviews/reviews.component';
     MembershipsComponent,
     BranchesComponent,
     CartComponent,
-    ProfileComponent,
     NavbarComponent,
     CoachesComponent,
     ProductsListViewComponent,
@@ -82,7 +85,12 @@ import { ReviewsComponent } from './Components/reviews/reviews.component';
     CoachDetailsComponent,
     RegisterModalComponent,
     LogoutDialogComponent,
-    ReviewsComponent
+    ReviewsComponent,
+    AccountComponent,
+    OrdersComponent,
+    InboxComponent,
+    VouchersComponent,
+    UserReviewsComponent
   ],
   imports: [
     BrowserModule,

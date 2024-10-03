@@ -1,41 +1,55 @@
 import { Injectable } from '@angular/core';
 import { IProduct } from '../Interfaces/iproduct';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, BehaviorSubject, switchMap, forkJoin } from 'rxjs';
+import { environment } from '../../environments/environment';
+import { UserService } from './user.service';
+import { IWishlistItem } from '../Interfaces/iwishlist-item';
+import { INewWishlistItem } from '../Interfaces/inew-wishlist-item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class WishlistService {
-  private wishlistItems: IProduct[] = [];
+  apiUrl = environment.apiUrl;
 
-  constructor() { }
+  constructor(private httpClient: HttpClient,
+              private userService: UserService) {}
 
-  addToWishlist(product: IProduct) {
-    let prod = this.wishlistItems.find(item => item.id === product.id);
-    if (!prod) {
-      this.wishlistItems.push(product);
-      product.isFav = true;
+  private getHeaders(): HttpHeaders {
+    const token = this.userService.getToken(); // Ensure the JWT token is available
+    if (!token) {
+      throw new Error('No token found');
     }
-    console.log(this.wishlistItems);
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
   }
 
-  removeFromWishlist(product: IProduct) {
-    const prodIndex = this.wishlistItems.findIndex(item => item.id === product.id);
-    if (prodIndex > -1) {
-      this.wishlistItems.splice(prodIndex, 1);
-      product.isFav = false;
-    }
-    console.log(this.wishlistItems);
+  getWishlistItems(userId: number): Observable<IWishlistItem[]> {
+    return this.httpClient.get<IWishlistItem[]>(`${this.apiUrl}/wishlist-items?filters[userId][$eq]=${userId}`);
   }
 
-  getWishlistItems(): IProduct[] {
-    return this.wishlistItems;
+  addToWishlist(wishlistItem: INewWishlistItem): Observable<IWishlistItem> {
+    const headers = this.getHeaders();
+    return this.httpClient.post<IWishlistItem>(`${this.apiUrl}/wishlist-items`, wishlistItem, { headers });
   }
 
-  getWishlistCount(): number {
-    return this.wishlistItems.length;
+  removeFromWishlist(itemDocId: string): Observable<any> {
+    const headers = this.getHeaders();
+    return this.httpClient.delete(`${this.apiUrl}/wishlist-items/${itemDocId}`, { headers });
   }
 
-  clearWishlist() {
-    this.wishlistItems = [];
+  clearWishlist(userId: number): Observable<any> {
+    const headers = this.getHeaders();
+    // First, fetch all cart items for the user and delete them one by one
+    return this.getWishlistItems(Number(userId)).pipe(
+      switchMap((wishlistItems) => {
+        // Loop through all cart items and issue DELETE requests
+        const deleteRequests = wishlistItems.map(item => this.httpClient.delete(`${this.apiUrl}/wishlist-items/${item.id}`, { headers }));
+        return forkJoin(deleteRequests); // Execute all DELETE requests concurrently
+      })
+  );
   }
+
 }

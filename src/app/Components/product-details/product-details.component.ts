@@ -1,10 +1,13 @@
 import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
 import { IProduct } from '../../Interfaces/iproduct';
 import { ProductService } from '../../Services/product.service';
-import { CartService } from '../../Services/cart.service';
 import { WishlistService } from '../../Services/wishlist.service';
-import { ICartItem } from '../../Interfaces/icart-item';
 import { ActivatedRoute } from '@angular/router';
+import { INewCartItem } from '../../Interfaces/inew-cart-item';
+import { CartItemService } from '../../Services/cart-item.service';
+import { UserService } from '../../Services/user.service';
+import { ModalService } from '../../Services/modal.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-product-details',
@@ -12,6 +15,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './product-details.component.scss'
 })
 export class ProductDetailsComponent implements OnInit {
+  apiUrl = environment.imageApi;
   card!: IProduct;
   @ViewChild('imgsWrapper') imgsWrapper!: ElementRef<HTMLDivElement>;
   countNo: number = 1;
@@ -23,13 +27,14 @@ export class ProductDetailsComponent implements OnInit {
   chosenImg: string = '';
   showAllColors = false;
   showAllSizes = false;
-  lowShippingPrice = 0;
-  highShippingPrice = 0;
+  userId : number | null = null;
 
   constructor(private prodService: ProductService,
-              private cartService: CartService,
               private wishlistService: WishlistService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private cartService: CartItemService,
+              private userService: UserService,
+              private modalService: ModalService) {
     this.deliveryStartDate = new Date(this.today);
     this.deliveryStartDate.setDate(this.today.getDate() + 3); // 3 days after today
 
@@ -42,34 +47,36 @@ export class ProductDetailsComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       // Extract product ID, if present, otherwise it will be NaN
       const prodId = Number(params.get('id'));
-      let prodCard = this.prodService.getProductById(prodId);
-      if(prodCard){
-        this.card = prodCard;
-      }
+      this.prodService.getProductById(prodId!).subscribe((response: any) => {
+        this.card = response.data[0];
       // Initialize the chosen img, color and size
-      this.chosenImg = this.card.imageUrl[0];
-      if (this.card.color && this.card.color.length > 0) {
-        this.chosenColor = this.card.color[0];
+      this.chosenImg = this.card.images[0].url;
+      if (this.card.prod_colors && this.card.prod_colors.length > 0) {
+        this.chosenColor = this.card.prod_colors[0].color;
       }
-      if (this.card.size && this.card.size.length > 0) {
-        this.chosenSize = this.card.size[0];
+      if (this.card.prod_sizes && this.card.prod_sizes.length > 0) {
+        this.chosenSize = this.card.prod_sizes[0].size;
       }
-      this.lowShippingPrice = this.prodService.lowShippingPrice;
-      this.highShippingPrice = this.prodService.highShippingPrice;
+      });
+    });
+
+    // Subscribe to the loggedUserId$ observable to get real-time updates
+    this.userService.loggedUserId$.subscribe((id) => {
+      this.userId = id;
     });
   }
 
   scroll(direction: string) {
-    if (this.card.imageUrl && this.card.imageUrl.length > 5) {
+    if (this.card.images && this.card.images.length > 5) {
       if (direction == 'left') {
         this.imgsWrapper.nativeElement.scrollBy({
-          left: -((this.card.imageUrl.length * 60) - 300),
+          left: -((this.card.images.length * 60) - 300),
           behavior: 'smooth'
         });
       }
       else {
         this.imgsWrapper.nativeElement.scrollBy({
-          left: ((this.card.imageUrl.length * 60) - 300),
+          left: ((this.card.images.length * 60) - 300),
           behavior: 'smooth'
         });
       }
@@ -101,35 +108,44 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   addToCart(prod: IProduct) {
-    let cartItem: ICartItem = {
-      'prodId': prod.id,
-      'prodQuantity': prod.quantity,
-      'prodName': prod.name,
-      'prodCategory': prod.categoryId,
-      'count': this.countNo,
-      'color': this.chosenColor,
-      'size': this.chosenSize,
-      'price': prod.price,
-      'prodImageUrl': prod.imageUrl,
-      'freeShipping': prod.freeShipping,
-      'shippingPrice': prod.shippingPrice,
-      'discountPrecent': prod.discountPrecent
-    };
-    this.cartService.addToCart(cartItem);
+    if (!this.userId) {
+      this.modalService.openLoginModal();
+    }
+    else {
+      let cartItem: INewCartItem = {
+        'userId': this.userId,
+        'prodId': prod.id,
+        'count': this.countNo,
+        'color': this.chosenColor,
+        'size': this.chosenSize
+      };
+      this.cartService.addToCart(cartItem);
+      this.countNo = 1;
+      if (this.card.prod_colors && this.card.prod_colors.length > 0) {
+        this.chosenColor = this.card.prod_colors[0].color;
+      }
+      if (this.card.prod_sizes && this.card.prod_sizes.length > 0) {
+        this.chosenSize = this.card.prod_sizes[0].size;
+      }
+    }
   }
 
   addToWishlist(card: IProduct) {
-    this.wishlistService.addToWishlist(card);
+    //this.wishlistService.addToWishlist(card);
   }
 
   removeFromWishlist(card: IProduct) {
-    this.wishlistService.removeFromWishlist(card);
+    //this.wishlistService.removeFromWishlist(card);
+  }
+
+  isInWishlist(card: IProduct) {
+    //return this.wishlistService.isInWishlist(card);
   }
 
   // Computed properties to determine visible items
   get visibleColors() {
-    if (this.card.color) {
-      return this.showAllColors ? this.card.color : this.card.color.slice(0, 10); // Show 10 colors
+    if (this.card.prod_colors) {
+      return this.showAllColors ? this.card.prod_colors : this.card.prod_colors.slice(0, 10); // Show 10 colors
     }
     else {
       return [];
@@ -137,8 +153,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   get visibleSizes() {
-    if (this.card.size) {
-      return this.showAllSizes ? this.card.size : this.card.size.slice(0, 10); // Show 10 colors
+    if (this.card.prod_sizes) {
+      return this.showAllSizes ? this.card.prod_sizes : this.card.prod_sizes.slice(0, 10); // Show 10 colors
     }
     else {
       return [];

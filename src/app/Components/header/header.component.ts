@@ -1,29 +1,29 @@
 import { Component, OnChanges, OnInit, Renderer2 } from '@angular/core';
-import { CartService } from '../../Services/cart.service';
-import { AuthService } from '../../Services/auth.service';
 import { ModalService } from '../../Services/modal.service';
+import { IUser } from '../../Interfaces/iuser';
+import { UserService } from '../../Services/user.service';
+import { INewUser } from '../../Interfaces/inew-user';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   cartCount: number = 0;
-  loginText: string = 'login';
-  isLoggedIn = false;
+  loginText: string = '';
   isModalOpen = false;
+  isUserLoggedIn: boolean = false;
 
-  constructor(private cartService: CartService,
-              private renderer: Renderer2,
-              private authService: AuthService,
-              private modalService: ModalService) {}
+  constructor(private renderer: Renderer2,
+              private modalService: ModalService,
+              private userService: UserService) {}
 
   ngOnInit(): void {
     // Subscribe to the cartCount$ observable to get real-time updates
-    this.cartService.cartCount$.subscribe(count => {
-      this.cartCount = count;
-    });
+    //this.cartService.cartCount$.subscribe(count => {
+    //  this.cartCount = count;
+    //});
 
     // Subscribe to the loginModalOpen$ observable to get real-time updates
     this.modalService.loginModalOpen$.subscribe(isOpen => {
@@ -31,26 +31,47 @@ export class HeaderComponent implements OnInit {
     });
 
     // Check if the user is logged in
-    if (this.authService.isLoggedIn) {
-      this.isLoggedIn = true;
-      this.loginText = 'Hi, Muhammed';
+    if (this.userService.getToken()) {
+      this.isUserLoggedIn = true;
+      this.loginText = 'Welcome';
     }
     else {
-      this.isLoggedIn = false;
       this.loginText = 'Log in';
+      this.isUserLoggedIn = false;
     }
+  }
+
+  register(username: string, email: string, password: string){
+    const newUser: INewUser = {"username": username, "email": email, "password": password}
+    this.userService.register(newUser).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.isUserLoggedIn = true;
+    this.loginText = 'Welcome';
+  }
+
+  login(email: string, password: string){
+    this.userService.login(email, password).subscribe(
+      (response) => {
+        console.log(response);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+    this.isUserLoggedIn = true;
+    this.loginText = 'Welcome';
   }
 
   logout(){
-    this.authService.logout();
-    this.isLoggedIn = false;
+    this.userService.logout();
     this.loginText = 'Log in';
-  }
-
-  login(){
-    this.authService.login();
-    this.isLoggedIn = true;
-    this.loginText = 'Hi, Muhammed';
+    this.isUserLoggedIn = false;
   }
 
   openModal() {

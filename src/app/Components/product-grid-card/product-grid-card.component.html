@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <a href="/product/{{card.id}}">
-      <img alt="product image" src={{card.imageUrl[0]}}>
+    <a routerLink="/product/{{card.id}}">
+      <img alt="product image" [src]="apiUrl + card.images[0].url">
       <h5>{{card.name}}</h5>
       <app-star-rating class="rate-stars" [prodCard]="card"></app-star-rating>
       <div class="coach-salary" *ngIf="card.discountPrecent">
@@ -14,8 +14,8 @@
       </div>
     </a>
     <div class="button-group">
-      <img class="icon fav-icon" *ngIf="!card.isFav" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
-      <img class="icon fav-icon" *ngIf="card.isFav" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
+      <img class="icon fav-icon" *ngIf="!isInWishlist(card)" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
+      <img class="icon fav-icon" *ngIf="isInWishlist(card)" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
       <button class="btn btn-success" (click)="openModal()">
         <img class="icon cart-icon" alt="icon" src='assets/icon-toCart.png'>
       </button>

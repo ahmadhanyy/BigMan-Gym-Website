@@ -10,14 +10,12 @@ import { CoachService } from '../../Services/coach.service';
 export class CoachesListViewComponent implements OnInit {
   coachesList: ICoach[] = [];
 
-  constructor(public coachService: CoachService) {
-  }
+  constructor(public coachService: CoachService) {}
 
   ngOnInit(): void {
-    this.coachesList = this.coachService.getCoaches();
-    //this.coachService.getCoaches().subscribe(coaches => {
-    //  this.coachesList = coaches;
-    //});
+    this.coachService.getCoaches().subscribe((response: any) => {
+      this.coachesList = response.data;
+    });
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="card">
   <div class="coach-card">
-    <a href="/coach/{{card.id}}">
-      <img alt="img" src="{{ card.imageUrl }}"/>
+    <a routerLink="/coach/{{card.id}}">
+      <img alt="img" [src]="apiUrl + card.image.url"/>
     <div class="coach-info">
       <p class="coach-name">{{ card.name }}</p>
       <app-star-rating class="rate-stars" [coachCard]="card"></app-star-rating>
@@ -9,7 +9,7 @@
     </div>
     </a>
     <div class="coach-payment">
-      <a href="/coach/{{card.id}}">
+      <a routerLink="/coach/{{card.id}}">
         <div class="coach-salary" *ngIf="card.discountPrecent">
           <p class="original-price">{{card.salary | currency: 'EGP'}}</p>
           <p class="discounted-price">{{(card.salary - (card.salary * card.discountPrecent) / 100) | currency: 'EGP'}}</p>

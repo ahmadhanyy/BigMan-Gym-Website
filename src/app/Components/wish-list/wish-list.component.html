@@ -9,7 +9,7 @@
       <tbody>
         <tr *ngFor="let item of wishlistItems">
           <td>
-            <app-product-list-card [card]="item"></app-product-list-card>
+            <app-product-list-card [card]="this.getProdByItem(item)"></app-product-list-card>
             <hr>
           </td>
         </tr>

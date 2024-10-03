@@ -8,14 +8,13 @@ import { BranchService } from '../../Services/branch.service';
   styleUrl: './branches.component.scss'
 })
 export class BranchesComponent implements OnInit {
-  branchsList: IBranch[] = [];
+  branchesList: IBranch[] = [];
 
   constructor(private branchService: BranchService) {}
 
   ngOnInit(): void {
-    this.branchsList = this.branchService.getBranches();
-    //this.branchService.getBranches().subscribe((data) => {
-    //  this.branchsList = data;
-    //});
+    this.branchService.getBranches().subscribe((response: any) => {
+      this.branchesList = response.data;
+    });
   }
 }

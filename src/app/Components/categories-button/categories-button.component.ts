@@ -11,10 +11,9 @@ export class CategoriesButtonComponent {
   categories: ICategory[] = [];
 
   constructor(private catService: CategoryService) {
-    //this.catService.getCategories().subscribe((data) => {
-    //  this.categories = data;
-    //});
-    this.categories = this.catService.getCategories();
+    this.catService.getCategories().subscribe((response: any) => {
+      this.categories = response.data;
+    });
   }
 
 }

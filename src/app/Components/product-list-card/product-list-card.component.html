@@ -1,7 +1,7 @@
 <div class="card">
   <div class="prod-card">
-    <a href="/product/{{card.id}}">
-      <img alt="img" src="{{ card.imageUrl[0]}}" />
+    <a routerLink="/product/{{card.id}}">
+      <img alt="img" [src]="apiUrl + card.images[0].url">
     <div class="prod-info">
       <p class="prod-name">{{ card.name }}</p>
       <app-star-rating class="rate-stars" [prodCard]="card"></app-star-rating>
@@ -9,7 +9,7 @@
     </div>
     </a>
     <div class="prod-payment">
-      <a href="/product/{{card.id}}">
+      <a routerLink="/product/{{card.id}}">
         <div class="prod-price" *ngIf="card.discountPrecent">
           <p class="original-price">{{card.price | currency: 'EGP'}}</p>
           <p class="discounted-price">{{(card.price - (card.price * card.discountPrecent) / 100) | currency: 'EGP'}}</p>
@@ -20,8 +20,8 @@
         </div>
       </a>
       <button class="cart-btn" (click)="openModal()">Add To Cart</button>
-      <img class="fav-icon" *ngIf="!card.isFav" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
-      <img class="fav-icon" *ngIf="card.isFav" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
+      <img class="fav-icon" *ngIf="!isInWishlist(card)" (click)="addToWishlist(card)" alt="icon" src='assets/icon-wishlist.png'>
+      <img class="fav-icon" *ngIf="isInWishlist(card)" (click)="removeFromWishlist(card)" alt="icon" src='assets/icon-wishlist-filled.png'>
     </div>
   </div>
 </div>

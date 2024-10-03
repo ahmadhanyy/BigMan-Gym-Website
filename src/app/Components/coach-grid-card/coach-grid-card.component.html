@@ -1,7 +1,7 @@
 <div class="card">
   <div class="card-body">
-    <a href="/coach/{{card.id}}">
-      <img [src]="card.imageUrl" alt="product image">
+    <a routerLink="/coach/{{card.id}}">
+      <img alt="product image" [src]="apiUrl + card.image.url">
       <h5>{{ card.name }}</h5>
       <app-star-rating class="rate-stars" [coachCard]="card"></app-star-rating>
       <h6>Experience: {{ card.experiance }}</h6>

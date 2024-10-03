@@ -1,3 +1,4 @@
+<!--
 <div class="body">
   <div class="empty-cart" *ngIf="cartItems.length === 0">
     <img src="assets/icon-empty-cart.png" alt="Empty Cart" class="empty-cart-image">
@@ -13,10 +14,10 @@
       <div class="cart-items">
         <div class="cart-item" *ngFor="let item of cartItems">
           <div class="prod-card">
-            <a href="/product/{{item.prodId}}" target="_blank"><img alt="img" src="{{ item.prodImageUrl[0]}}" /></a>
+            <a routerLink="/product/{{item.prodId}}" target="_blank"><img alt="img" src="{{ item.prodImageUrl[0]}}" /></a>
             <div class="prod-details">
-              <a href="/product/{{item.prodId}}" target="_blank"><p class="prod-name">{{ item.prodName }}</p></a>
-              <a href="/product/{{item.prodId}}" target="_blank">
+              <a routerLink="/product/{{item.prodId}}" target="_blank"><p class="prod-name">{{ item.prodName }}</p></a>
+              <a routerLink="/product/{{item.prodId}}" target="_blank">
                 <div class="prod-price" *ngIf="item.discountPrecent">
                   <p class="discounted-text">{{item.discountPrecent}}% OFF for limited time</p>
                   <p class="original-price">{{item.price | currency: 'EGP'}}</p>
@@ -60,3 +61,4 @@
     <app-product-carousel [textOnList]="textOnList" [products]="productsList"></app-product-carousel>
   </div>
 </div>
+-->
