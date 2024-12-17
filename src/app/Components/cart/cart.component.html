@@ -10,12 +10,19 @@
         <p>Shopping Cart ({{cartItems.length}})</p>
       </div>
       <div class="cart-items">
-        <div class="cart-item" *ngFor="let item of cartItems">
+        <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByCartItem">
           <div class="prod-card">
+<<<<<<< Updated upstream
             <a href="/products/{{item.product.id}}" target="_blank"><img alt="img" src="{{ item.product.imageUrl }}" /></a>
             <div class="prod-details">
               <a href="/products/{{item.product.id}}" target="_blank"><p class="prod-name">{{ item.product.name }}</p></a>
               <a href="/products/{{item.product.id}}" target="_blank">
+=======
+            <a routerLink="/product/{{item.product.id}}" target="_blank"><img alt="img" [src]="apiUrl + item.product.images[0].url" /></a>
+            <div class="prod-details">
+              <a routerLink="/product/{{item.product.id}}" target="_blank"><p class="prod-name">{{ item.product.name }}</p></a>
+              <a routerLink="/product/{{item.product.id}}" target="_blank">
+>>>>>>> Stashed changes
                 <div class="prod-price" *ngIf="item.product.discountPrecent">
                   <p class="discounted-text">{{item.product.discountPrecent}}% OFF for limited time</p>
                   <p class="original-price">{{item.product.price | currency: 'EGP'}}</p>

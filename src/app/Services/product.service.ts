@@ -69,4 +69,14 @@ export class ProductService {
     return rows;
   }
 
+<<<<<<< Updated upstream
+=======
+  calculateDiscountedPrice(product: IProduct): number {
+    if (product.discountPrecent) {
+      return product.price - (product.price * product.discountPrecent) / 100;
+    }
+    return product.price;
+  }
+
+>>>>>>> Stashed changes
 }
